@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.merlynr.parking.dao.ParkingRecordDao">
+  <resultMap id="BaseResultMap" type="com.merlynr.parking.model.ParkingRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user" jdbcType="VARCHAR" property="user" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="parking_lot" jdbcType="VARCHAR" property="parkingLot" />
+    <result column="car_in" jdbcType="VARCHAR" property="carIn" />
+    <result column="car_out" jdbcType="VARCHAR" property="carOut" />
+    <result column="money" jdbcType="VARCHAR" property="money" />
+    <result column="end_money" jdbcType="VARCHAR" property="endMoney" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `user`, start_time, end_time, parking_lot, car_in, car_out, money, end_money
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from parking_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from parking_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.ParkingRecord" useGeneratedKeys="true">
+    insert into parking_record (`user`, start_time, end_time, 
+      parking_lot, car_in, car_out, 
+      money, end_money)
+    values (#{user,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{parkingLot,jdbcType=VARCHAR}, #{carIn,jdbcType=VARCHAR}, #{carOut,jdbcType=VARCHAR}, 
+      #{money,jdbcType=VARCHAR}, #{endMoney,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.ParkingRecord" useGeneratedKeys="true">
+    insert into parking_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="user != null">
+        `user`,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="parkingLot != null">
+        parking_lot,
+      </if>
+      <if test="carIn != null">
+        car_in,
+      </if>
+      <if test="carOut != null">
+        car_out,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="endMoney != null">
+        end_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="user != null">
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parkingLot != null">
+        #{parkingLot,jdbcType=VARCHAR},
+      </if>
+      <if test="carIn != null">
+        #{carIn,jdbcType=VARCHAR},
+      </if>
+      <if test="carOut != null">
+        #{carOut,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="endMoney != null">
+        #{endMoney,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.merlynr.parking.model.ParkingRecord">
+    update parking_record
+    <set>
+      <if test="user != null">
+        `user` = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parkingLot != null">
+        parking_lot = #{parkingLot,jdbcType=VARCHAR},
+      </if>
+      <if test="carIn != null">
+        car_in = #{carIn,jdbcType=VARCHAR},
+      </if>
+      <if test="carOut != null">
+        car_out = #{carOut,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="endMoney != null">
+        end_money = #{endMoney,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.merlynr.parking.model.ParkingRecord">
+    update parking_record
+    set `user` = #{user,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      parking_lot = #{parkingLot,jdbcType=VARCHAR},
+      car_in = #{carIn,jdbcType=VARCHAR},
+      car_out = #{carOut,jdbcType=VARCHAR},
+      money = #{money,jdbcType=VARCHAR},
+      end_money = #{endMoney,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
