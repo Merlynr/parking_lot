@@ -81,7 +81,7 @@ export default {
         }
     },
   created() {
-      this.asideHeight.height = window.innerHeight - 50 + "px";
+      this.asideHeight.height = window.innerHeight + 20 + "px";
       this.name = localStorage.name;
       if(!localStorage.getItem("token")) {
         this.$router.push("/login");

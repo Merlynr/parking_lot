@@ -1,7 +1,10 @@
 package com.merlynr.parking.dao;
 
 import com.merlynr.parking.model.Money;
+import com.merlynr.parking.model.ParkingLot;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface MoneyDao {
@@ -16,4 +19,6 @@ public interface MoneyDao {
     int updateByPrimaryKeySelective(Money record);
 
     int updateByPrimaryKey(Money record);
+
+    List<Money> selectAll();
 }

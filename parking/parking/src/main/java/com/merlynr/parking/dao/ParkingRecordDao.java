@@ -1,7 +1,10 @@
 package com.merlynr.parking.dao;
 
+import com.merlynr.parking.model.ParkingLot;
 import com.merlynr.parking.model.ParkingRecord;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface ParkingRecordDao {
@@ -16,4 +19,5 @@ public interface ParkingRecordDao {
     int updateByPrimaryKeySelective(ParkingRecord record);
 
     int updateByPrimaryKey(ParkingRecord record);
+    List<ParkingRecord> selectAll();
 }
