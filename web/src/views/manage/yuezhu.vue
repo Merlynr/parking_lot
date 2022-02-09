@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:45:33
- * @LastEditTime: 2022-02-09 17:00:21
+ * @LastEditTime: 2022-02-09 18:55:15
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\manage\yuezhu.vue
@@ -113,7 +113,6 @@ export default {
   },
   methods: {
     imgbase() {
-      var license_image = "";
       //获取选中图片对象（包含文件的名称、大小、类型等，如file.size）
       var file = document.getElementById("inputfile").files[0];
       // 声明js的文件流
@@ -125,13 +124,28 @@ export default {
         reader.onloadend = (eve) => {
           // 把转换过得base赋值给全局变量
           // 这里reader.result就是转换好的base64格式图片
-          license_image = eve.target.result;
+          this.form["license_img"] = eve.target.result;
         };
-        this.form['license_img'] = JSON.parse(license_image);
       }
     },
-    add() {
-      console.log(this.form);
+    async add() {
+      let baseForm = {
+        name: this.form["name"],
+        role: "1",
+        licensePlates: this.form.license_plates,
+        tel: this.form.tel,
+        startTime: new Date(this.form.timeValue[0]),
+        endTime: new Date(this.form.timeValue[1]),
+        parkingLotId: this.form.parkingLot,
+        license: this.form.license_img,
+      };
+      const res = await this.$http.post("/api/user/register", baseForm);
+      console.log(baseForm);
+      this.$message({
+                type: "info",
+                message: res.data.msg
+            })
+        this.form={}
     },
   },
 };
