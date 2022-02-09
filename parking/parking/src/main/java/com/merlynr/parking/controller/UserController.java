@@ -35,7 +35,6 @@ public class UserController {
     @Autowired
     private UsersDao userDao;
 
-
     /**
      * resigter
      *

@@ -84,9 +84,9 @@ public class UserServiceImpl implements UserService {
     public String addUser(Users user) {
         if(usersDao.findByUsername(user.getUserName()) ==null){
             usersDao.insert(user);
-            return "注册成功";
+            return "新增成功";
         }else {
-            return "已注册";
+            return "已存在";
         }
     }
 

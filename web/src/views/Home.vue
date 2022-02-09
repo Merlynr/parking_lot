@@ -24,33 +24,33 @@
               active-text-color="rgb(255,255,255)" :unique-opened="true">
                   <el-submenu index="1">
                       <template slot="title"><i class="el-icon-money"></i>车辆管理</template>
-                          <el-menu-item index="/mission">月租车辆信息</el-menu-item>
-                          <el-menu-item index="/performance">车位管理</el-menu-item>
+                          <el-menu-item index="/yuezhu">月租车辆信息</el-menu-item>
+                          <el-menu-item index="/">车位管理</el-menu-item>
                   </el-submenu>
                   <el-submenu index="2">
                       <template slot="title"><i class="el-icon-setting"></i>通行信息</template>
-                          <el-menu-item index="/user">出场记录</el-menu-item>
-                          <el-menu-item index="/depart">入场记录</el-menu-item>
+                          <el-menu-item index="/">出场记录</el-menu-item>
+                          <el-menu-item index="/">入场记录</el-menu-item>
                   </el-submenu>
                   <el-submenu index="3">
                       <template slot="title"><i class="el-icon-document"></i>缴费信息</template>
-                          <el-menu-item index="/information">月租车辆缴费</el-menu-item>
-                          <el-menu-item index="/information">临时缴费记录</el-menu-item>
-                          <el-menu-item index="/information">月租车费用设置</el-menu-item>
-                          <el-menu-item index="/information">临时费用设置</el-menu-item>
+                          <el-menu-item index="/">月租车辆缴费</el-menu-item>
+                          <el-menu-item index="/">临时缴费记录</el-menu-item>
+                          <el-menu-item index="/">月租车费用设置</el-menu-item>
+                          <el-menu-item index="/">临时费用设置</el-menu-item>
                   </el-submenu>
                   <el-submenu index="4">
                       <template slot="title"><i class="el-icon-setting"></i>统计报表</template>
-                          <el-menu-item index="/user">收入报表</el-menu-item>
+                          <el-menu-item index="/">收入报表</el-menu-item>
                   </el-submenu>
               </el-menu>
           </el-aside>
           <el-main class="content">
               <router-view></router-view>
-              <el-image
-              style="margin:-100px;"
+              <!-- <el-image
+              style="position:absolute;top:50px;left:215px;z-index:-20"
       :src="url"
-      :fit='cover'></el-image>
+      :fit='cover'></el-image> -->
           </el-main>
         </el-container>
          <el-dialog
@@ -72,7 +72,7 @@
 export default {
   data() {
         return {
-          url: 'https://img.xiaopiu.com/userImages/img1938817e32d292c0.jpeg',
+          
             asideHeight: {
                 height: "500px",
             },
@@ -106,7 +106,7 @@ export default {
         const res = this.$http.post("/api/sign/doSign",{
           id: localStorage.getItem("id")
         })
-        console.log(res.data);
+        console.log(res.data.username);
       }
     }
   },
