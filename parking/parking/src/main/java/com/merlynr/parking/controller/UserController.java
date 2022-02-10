@@ -140,5 +140,18 @@ public class UserController {
             return userService.findByUserId(id);
         }
     }
+    @UserLoginToken
+    @GetMapping("findByTelAndPlates")
+    public List<Users> findUserByTelAndPlates(@RequestParam("tel") String tel,@RequestParam("license_plates") String license_plates){
+        if (tel == null || license_plates==null) {
+            throw new BaseException(ResponseCode.RESOURCES_NOT_EXIST);
+        }else {
+            if ((tel.isEmpty()||tel.trim().length()== 0)&& (license_plates.isEmpty() || license_plates.trim().length()== 0)){
+                return userService.findAll();
+            }else {
+                return userService.searchByTelAndPlates(tel,license_plates);
+            }
+        }
+    }
 
 }

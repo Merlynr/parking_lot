@@ -106,6 +106,10 @@ public class UserServiceImpl implements UserService {
         return usersDao.updateByPrimaryKeySelective(user);
     }
 
+    @Override
+    public List<Users> searchByTelAndPlates(String tel, String plates) {
+        return usersDao.selectByTelAndPlates(tel,plates);
+    }
 
 
 }

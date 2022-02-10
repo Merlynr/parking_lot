@@ -41,7 +41,7 @@
                   </el-submenu>
                   <el-submenu index="4">
                       <template slot="title"><i class="el-icon-setting"></i>统计报表</template>
-                          <el-menu-item index="/">收入报表</el-menu-item>
+                          <el-menu-item index="/user">收入报表</el-menu-item>
                   </el-submenu>
               </el-menu>
           </el-aside>
@@ -81,7 +81,7 @@ export default {
         }
     },
   created() {
-      this.asideHeight.height = window.innerHeight + 20 + "px";
+      this.asideHeight.height = window.innerHeight - 50 + "px";
       this.name = localStorage.name;
       if(!localStorage.getItem("token")) {
         this.$router.push("/login");

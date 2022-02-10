@@ -155,6 +155,13 @@
       license = #{license,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByTelAndPlates" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where tel = #{tel,jdbcType=VARCHAR}
+    or  `license_plates` = #{licensePlates,jdbcType=VARCHAR}
+  </select>
   <select id="selectAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
