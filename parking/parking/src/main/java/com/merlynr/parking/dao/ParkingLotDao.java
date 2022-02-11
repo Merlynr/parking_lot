@@ -4,7 +4,6 @@ import com.merlynr.parking.model.ParkingLot;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
 @Mapper
 public interface ParkingLotDao {
     int deleteByPrimaryKey(Integer id);

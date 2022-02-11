@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:45:33
- * @LastEditTime: 2022-02-10 20:18:52
+ * @LastEditTime: 2022-02-10 20:57:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\manage\yuezhu.vue
@@ -29,13 +29,13 @@
         <el-button type="primary" @click="getTableData">查询</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="tableData" style="width: 100%; " height="450">
+    <el-table :data="tableData" style="width: 100%" height="450">
       <el-table-column type="index" width="50"> </el-table-column>
       <el-table-column prop="licensePlates" label="车牌" width="160">
       </el-table-column>
       <el-table-column prop="name" label="驾驶者" width="100">
       </el-table-column>
-      <el-table-column prop="tel" label="电话号码" width="100">
+      <el-table-column prop="tel" label="电话号码" width="130">
       </el-table-column>
       <el-table-column prop="startTime" label="开始时间" width="160">
       </el-table-column>
@@ -134,6 +134,7 @@
 export default {
   data() {
     return {
+      isUpdateState: false,
       tableData: [],
       pageNum: 1,
       total: 100,
@@ -220,11 +221,34 @@ export default {
       this.pageNum = page;
       this.findByPage();
     },
-    handleEdit(index, row) {
-      console.log(index, row);
+    async handleEdit(index, row) {
+      this.isOpenEditors = true;
+      this.form = row;
+      this.form.license_plates = row.licensePlates;
+      this.form.license_img = row.license;
+      this.form.parkingLot = row.parkingLotId;
+      this.isOpenEditors = true;
+      let baseForm = {
+        name: this.form["name"],
+        role: "1",
+        licensePlates: this.form.license_plates,
+        tel: this.form.tel,
+        startTime: new Date(this.form.timeValue[0]),
+        endTime: new Date(this.form.timeValue[1]),
+        parkingLotId: this.form.parkingLot,
+        license: this.form.license_img,
+        id:row.id
+      };
+      await this.$http.post("/api/user/updateUserInfo", baseForm);
+      this.form = {};
+      this.findByPage();
+      this.isUpdateState = false;
     },
     handleDelete(index, row) {
-      console.log(index, row);
+      this.$http.post("/api/user/deleteUser",{
+          id:row.id
+      })
+      this.findByPage();
     },
     imgbase() {
       //获取选中图片对象（包含文件的名称、大小、类型等，如file.size）
@@ -253,11 +277,7 @@ export default {
         parkingLotId: this.form.parkingLot,
         license: this.form.license_img,
       };
-      const res = await this.$http.post("/api/user/register", baseForm);
-      this.$message({
-        type: "info",
-        message: res.data.msg,
-      });
+      await this.$http.post("/api/user/register", baseForm);
       this.form = {};
       this.findByPage();
     },

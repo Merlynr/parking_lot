@@ -16,7 +16,10 @@ const routes = [
         path: '/yuezhu',
         name: 'yuezhu',
         component: () => import("../views/manage/yuezhu.vue")
-      },
+      },{
+        path: '/chewei',
+        component: () => import("../views/manage/chewei.vue")
+      }
       // {
       //   path: '/performance',
       //   name: 'performance',

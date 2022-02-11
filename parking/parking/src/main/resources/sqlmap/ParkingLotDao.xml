@@ -3,11 +3,13 @@
 <mapper namespace="com.merlynr.parking.dao.ParkingLotDao">
   <resultMap id="BaseResultMap" type="com.merlynr.parking.model.ParkingLot">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="type" jdbcType="VARCHAR" property="type" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="used" jdbcType="VARCHAR" property="used" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `type`, `time`
+    id, `name`, `type`, `time`, used
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,44 +22,66 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.ParkingLot" useGeneratedKeys="true">
-    insert into parking_lot (`type`, `time`)
-    values (#{type,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP})
+    insert into parking_lot (`name`, `type`, `time`, 
+      used)
+    values (#{name,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{time,jdbcType=VARCHAR}, 
+      #{used,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.ParkingLot" useGeneratedKeys="true">
     insert into parking_lot
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
       <if test="type != null">
         `type`,
       </if>
       <if test="time != null">
         `time`,
       </if>
+      <if test="used != null">
+        used,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="type != null">
         #{type,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null">
+        #{used,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.merlynr.parking.model.ParkingLot">
     update parking_lot
     <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="type != null">
         `type` = #{type,jdbcType=VARCHAR},
       </if>
       <if test="time != null">
-        `time` = #{time,jdbcType=TIMESTAMP},
+        `time` = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="used != null">
+        used = #{used,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.merlynr.parking.model.ParkingLot">
     update parking_lot
-    set `type` = #{type,jdbcType=VARCHAR},
-      `time` = #{time,jdbcType=TIMESTAMP}
+    set `name` = #{name,jdbcType=VARCHAR},
+      `type` = #{type,jdbcType=VARCHAR},
+      `time` = #{time,jdbcType=VARCHAR},
+      used = #{used,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectAll" resultMap="BaseResultMap">

@@ -25,7 +25,7 @@
                   <el-submenu index="1">
                       <template slot="title"><i class="el-icon-money"></i>车辆管理</template>
                           <el-menu-item index="/yuezhu">月租车辆信息</el-menu-item>
-                          <el-menu-item index="/">车位管理</el-menu-item>
+                          <el-menu-item index="/chewei">车位管理</el-menu-item>
                   </el-submenu>
                   <el-submenu index="2">
                       <template slot="title"><i class="el-icon-setting"></i>通行信息</template>
