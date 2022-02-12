@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:45:33
- * @LastEditTime: 2022-02-10 20:57:01
+ * @LastEditTime: 2022-02-12 17:05:49
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\manage\yuezhu.vue
@@ -42,6 +42,13 @@
       <el-table-column prop="endTime" label="结束时间" width="160">
       </el-table-column>
       <el-table-column prop="parkingLotId" label="车位编码" width="80">
+        <template slot-scope="scope">
+          <div v-for="(item, index) in allList" :key="index">
+            <div v-if="item.id == scope.row.parkingLotId">
+              {{ allList[index].name }}
+            </div>
+          </div>
+        </template>
       </el-table-column>
       <el-table-column label="行驶证" width="180">
         <template slot-scope="scope">
@@ -103,7 +110,15 @@
           </el-date-picker>
         </el-form-item>
         <el-form-item label="车位编码">
-          <el-input v-model="form.parkingLot"></el-input>
+          <el-select v-model="selectValue" placeholder="请选择">
+            <el-option
+              v-for="item in parkingOptions"
+              :key="item"
+              :label="item.name"
+              :value="item.id"
+            >
+            </el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="车牌">
           <input type="file" id="inputfile" @change="imgbase()" />
@@ -113,6 +128,7 @@
             @click="
               isOpenEditors = false;
               form = {};
+              selectValue = {};
             "
             >取 消</el-button
           >
@@ -121,6 +137,7 @@
             @click="
               add();
               isOpenEditors = false;
+              selectValue = {};
             "
             >确 定</el-button
           >
@@ -134,6 +151,10 @@
 export default {
   data() {
     return {
+      allList:[],
+      selectValue: 0,
+      list: [], //所有车位
+      parkingOptions: [],
       isUpdateState: false,
       tableData: [],
       pageNum: 1,
@@ -177,6 +198,7 @@ export default {
       },
       fileList: [],
       form: {
+        id: "",
         license_plates: "",
         name: "",
         tel: "",
@@ -188,8 +210,22 @@ export default {
   },
   created() {
     this.findByPage();
+    this.getUnusedParking();
   },
   methods: {
+    async getUnusedParking() {
+      let res = await this.$http.get("/api/yuezhu/list");
+      let lisx = res.data.data;
+      this.allList=lisx
+      let indexs = [];
+      lisx.forEach((arr) => {
+        if (arr.type == "1" && arr.used == "0") {
+          indexs.push(arr);
+        }
+      });
+      this.parkingOptions = indexs;
+      this.list = indexs;
+    },
     async getTableData() {
       const res = await this.$http.get("/api/user/findByTelAndPlates", {
         params: {
@@ -221,33 +257,24 @@ export default {
       this.pageNum = page;
       this.findByPage();
     },
-    async handleEdit(index, row) {
+    handleEdit(index, row) {
+      this.getUnusedParking();
+      this.selectValue = parseInt(row.parkingLotId);
+      this.isUpdateState = true;
       this.isOpenEditors = true;
       this.form = row;
       this.form.license_plates = row.licensePlates;
       this.form.license_img = row.license;
       this.form.parkingLot = row.parkingLotId;
       this.isOpenEditors = true;
-      let baseForm = {
-        name: this.form["name"],
-        role: "1",
-        licensePlates: this.form.license_plates,
-        tel: this.form.tel,
-        startTime: new Date(this.form.timeValue[0]),
-        endTime: new Date(this.form.timeValue[1]),
-        parkingLotId: this.form.parkingLot,
-        license: this.form.license_img,
-        id:row.id
-      };
-      await this.$http.post("/api/user/updateUserInfo", baseForm);
-      this.form = {};
+      this.form.id = row.id;
+      this.zhanyong(row.parkingLot,0)
       this.findByPage();
-      this.isUpdateState = false;
     },
     handleDelete(index, row) {
-      this.$http.post("/api/user/deleteUser",{
-          id:row.id
-      })
+      this.$http.post("/api/user/deleteUser", {
+        id: row.id,
+      });
       this.findByPage();
     },
     imgbase() {
@@ -268,18 +295,32 @@ export default {
     },
     async add() {
       let baseForm = {
+        id: this.form["id"],
         name: this.form["name"],
         role: "1",
         licensePlates: this.form.license_plates,
         tel: this.form.tel,
         startTime: new Date(this.form.timeValue[0]),
         endTime: new Date(this.form.timeValue[1]),
-        parkingLotId: this.form.parkingLot,
+        parkingLotId: this.selectValue,
         license: this.form.license_img,
       };
-      await this.$http.post("/api/user/register", baseForm);
+      this.zhanyong(this.selectValue,1)
+      if (this.isUpdateState) {
+        await this.$http.post("/api/user/updateUserInfo", baseForm);
+        this.isUpdateState = false;
+      } else {
+        await this.$http.post("/api/user/register", baseForm);
+      }
       this.form = {};
       this.findByPage();
+    },
+    zhanyong(id, yongmeiyong) {
+      // 0没有1有用
+      this.$http.post("/api/yuezhu/update", {
+        id: id,
+        used: yongmeiyong.toString(),
+      });
     },
   },
 };

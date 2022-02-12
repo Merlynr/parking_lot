@@ -7,11 +7,9 @@ import com.merlynr.parking.model.Users;
 import com.merlynr.parking.service.ParkingService;
 import com.merlynr.parking.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -69,5 +67,11 @@ public class CheWeiController {
         }else {
             return parkingService.update(parkingLot);
         }
+    }
+
+    @UserLoginToken
+    @GetMapping("list")
+    public List<ParkingLot> list(){
+        return parkingService.findAll();
     }
 }

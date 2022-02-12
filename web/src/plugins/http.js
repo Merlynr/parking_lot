@@ -11,6 +11,6 @@ export default (res = {}, _this) => {
             message: res.data.msg
         });
         console.log(res.data.msg);
-        throw new Error(res.data.msg);
+        // throw new Error(res.data.msg);
     }
 }

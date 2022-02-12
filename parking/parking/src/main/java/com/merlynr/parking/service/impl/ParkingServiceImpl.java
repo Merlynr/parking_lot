@@ -50,7 +50,7 @@ public class ParkingServiceImpl implements ParkingService {
 
     @Override
     public Integer update(ParkingLot parkingLot) {
-        return parkingLotDao.updateByPrimaryKey(parkingLot);
+        return parkingLotDao.updateByPrimaryKeySelective(parkingLot);
     }
 
     private PageInfo<ParkingLot> getPageInfo(PageRequest pageRequest) {

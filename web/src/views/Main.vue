@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 20:45:45
- * @LastEditTime: 2022-02-08 13:25:28
+ * @LastEditTime: 2022-02-11 20:12:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\main.vue
@@ -12,7 +12,6 @@
     <el-image
       style="position: absolute; top: 50px; left: 215px; z-index: -20"
       :src="url"
-      :fit="fill"
     ></el-image>
   </div>
 </template>

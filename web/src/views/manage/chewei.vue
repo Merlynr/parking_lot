@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:46:00
- * @LastEditTime: 2022-02-11 17:13:26
+ * @LastEditTime: 2022-02-12 16:15:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\manage\chewei.vue
@@ -23,6 +23,7 @@
       <el-form-item label="类型">
         <el-select v-model="searchForm.type" placeholder="请选择">
           <el-option
+            @change="changeSelect"
             v-for="item in options"
             :key="item.value"
             :label="item.label"
@@ -85,18 +86,24 @@
     <el-dialog title="车位管理" :visible.sync="dialogFormVisible">
       <el-form :model="form">
         <el-form-item label="车位号">
-          <el-input v-model="form.name" ></el-input>
+          <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="车位类型">
-          <el-select v-model="form.type" placeholder="请选择活动区域">
-            <!-- TODO -->
+          <el-select
+            @change="changeSelect"
+            v-model="form.type"
+            placeholder="请选择活动区域"
+          >
             <el-option label="月租车位" value="1"></el-option>
             <el-option label="临时车位" value="2"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="车位状态">
-          <el-select v-model="form.used" placeholder="请选择状态">
-            <!-- TODO -->
+          <el-select
+            @change="changeSelect"
+            v-model="form.used"
+            placeholder="请选择状态"
+          >
             <el-option label="已占用" value="1"></el-option>
             <el-option label="空闲" value="0"></el-option>
           </el-select>
@@ -126,7 +133,6 @@ export default {
         name: "",
         type: "",
         used: "",
-        title: "",
       },
       dialogFormVisible: false,
       searchForm: {
@@ -178,6 +184,9 @@ export default {
       this.getTableData();
   },
   methods: {
+    changeSelect() {
+      this.$forceUpdate();
+    },
     submit() {
       this.$http.post("/api/yuezhu/update", this.form);
       this.form = {};
@@ -205,6 +214,7 @@ export default {
         used: "0",
       };
       await this.$http.post("/api/yuezhu/add", form);
+      this.searchForm = {};
       this.getTableData();
     },
     async getTableData() {
