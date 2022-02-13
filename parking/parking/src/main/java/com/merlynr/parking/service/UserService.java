@@ -64,4 +64,6 @@ public interface UserService {
     Integer updateUser(Users user);
 
     List<Users> searchByTelAndPlates(String tel,String plates);
+
+    Users searchByLicense(String license);
 }

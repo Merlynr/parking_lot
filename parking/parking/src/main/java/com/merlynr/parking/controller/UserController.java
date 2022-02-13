@@ -153,5 +153,14 @@ public class UserController {
             }
         }
     }
+    @UserLoginToken
+    @GetMapping("findByLicense")
+    public Users findByLicense(@RequestParam("license_plates") String license_plates){
+        if (license_plates==null) {
+            throw new BaseException(ResponseCode.RESOURCES_NOT_EXIST);
+        }else {
+           return userService.searchByLicense(license_plates);
+        }
+    }
 
 }

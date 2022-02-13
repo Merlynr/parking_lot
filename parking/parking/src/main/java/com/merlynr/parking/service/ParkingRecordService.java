@@ -1,5 +1,7 @@
 package com.merlynr.parking.service;
 
+import com.merlynr.parking.common.PageRequest;
+import com.merlynr.parking.common.PageResult;
 import com.merlynr.parking.model.ParkingRecord;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ import java.util.List;
 @Service
 public interface ParkingRecordService {
     String add(ParkingRecord parkingRecord);
-    String delete(int id);
+    Integer delete(int id);
     List<ParkingRecord> findAll();
+    PageResult findPage(PageRequest pageRequest);
+    Integer update(ParkingRecord parkingRecord);
+    List<ParkingRecord> searchRecordByParkingLot(String parkLot);
 }

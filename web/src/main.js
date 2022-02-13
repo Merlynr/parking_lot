@@ -16,6 +16,13 @@ Vue.prototype.$http = axios.create({
     'token': localStorage.getItem("token")
   }
 })
+Vue.prototype.$httpX = axios.create({
+  baseURL: "https://aip.baidubce.com/rest/2.0/ocr/v1/license_plate?access_token=24.f611b2d9b75bf7b2f8cdb026c1a86670.2592000.1646725923.282335-25575534", //在此处修改后端的地址和端口
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+})
+
 new Vue({
   router,
   // store,

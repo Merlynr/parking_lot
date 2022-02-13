@@ -111,5 +111,10 @@ public class UserServiceImpl implements UserService {
         return usersDao.selectByTelAndPlates(tel,plates);
     }
 
+    @Override
+    public Users searchByLicense(String license) {
+        return usersDao.searchByLicense(license);
+    }
+
 
 }

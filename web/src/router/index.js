@@ -19,6 +19,9 @@ const routes = [
       },{
         path: '/chewei',
         component: () => import("../views/manage/chewei.vue")
+      },{
+        path:'/record',
+        component: () => import("../views/paizhao.vue")
       }
       // {
       //   path: '/performance',

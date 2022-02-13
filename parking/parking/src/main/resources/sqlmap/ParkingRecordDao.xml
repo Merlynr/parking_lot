@@ -3,6 +3,7 @@
 <mapper namespace="com.merlynr.parking.dao.ParkingRecordDao">
   <resultMap id="BaseResultMap" type="com.merlynr.parking.model.ParkingRecord">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="license" jdbcType="VARCHAR" property="license" />
     <result column="user" jdbcType="VARCHAR" property="user" />
     <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
     <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
@@ -13,7 +14,7 @@
     <result column="end_money" jdbcType="VARCHAR" property="endMoney" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `user`, start_time, end_time, parking_lot, car_in, car_out, money, end_money
+    id, license, `user`, start_time, end_time, parking_lot, car_in, car_out, money, end_money
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -26,16 +27,21 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.ParkingRecord" useGeneratedKeys="true">
-    insert into parking_record (`user`, start_time, end_time, 
-      parking_lot, car_in, car_out, 
-      money, end_money)
-    values (#{user,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
-      #{parkingLot,jdbcType=VARCHAR}, #{carIn,jdbcType=VARCHAR}, #{carOut,jdbcType=VARCHAR}, 
-      #{money,jdbcType=VARCHAR}, #{endMoney,jdbcType=VARCHAR})
+    insert into parking_record (license, `user`, start_time, 
+      end_time, parking_lot, car_in, 
+      car_out, money, end_money
+      )
+    values (#{license,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{parkingLot,jdbcType=VARCHAR}, #{carIn,jdbcType=VARCHAR}, 
+      #{carOut,jdbcType=VARCHAR}, #{money,jdbcType=VARCHAR}, #{endMoney,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.ParkingRecord" useGeneratedKeys="true">
     insert into parking_record
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="license != null">
+        license,
+      </if>
       <if test="user != null">
         `user`,
       </if>
@@ -62,6 +68,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="license != null">
+        #{license,jdbcType=VARCHAR},
+      </if>
       <if test="user != null">
         #{user,jdbcType=VARCHAR},
       </if>
@@ -91,6 +100,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.merlynr.parking.model.ParkingRecord">
     update parking_record
     <set>
+      <if test="license != null">
+        license = #{license,jdbcType=VARCHAR},
+      </if>
       <if test="user != null">
         `user` = #{user,jdbcType=VARCHAR},
       </if>
@@ -120,7 +132,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.merlynr.parking.model.ParkingRecord">
     update parking_record
-    set `user` = #{user,jdbcType=VARCHAR},
+    set license = #{license,jdbcType=VARCHAR},
+      `user` = #{user,jdbcType=VARCHAR},
       start_time = #{startTime,jdbcType=TIMESTAMP},
       end_time = #{endTime,jdbcType=TIMESTAMP},
       parking_lot = #{parkingLot,jdbcType=VARCHAR},
@@ -134,5 +147,11 @@
     select
     <include refid="Base_Column_List" />
     from parking_record
+  </select>
+  <select id="searchByLicense" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from parking_record
+    where license = #{license,jdbcType=VARCHAR}
   </select>
 </mapper>

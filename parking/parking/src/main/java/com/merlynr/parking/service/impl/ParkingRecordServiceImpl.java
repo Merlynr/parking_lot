@@ -1,5 +1,10 @@
 package com.merlynr.parking.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.merlynr.parking.common.PageRequest;
+import com.merlynr.parking.common.PageResult;
+import com.merlynr.parking.common.PageUtils;
 import com.merlynr.parking.dao.ParkingRecordDao;
 import com.merlynr.parking.model.ParkingRecord;
 import com.merlynr.parking.service.ParkingRecordService;
@@ -27,13 +32,36 @@ public class ParkingRecordServiceImpl implements ParkingRecordService {
     }
 
     @Override
-    public String delete(int id) {
+    public Integer delete(int id) {
         parkingRecordDao.deleteByPrimaryKey(id);
-        return "删除成功";
+        return 0;
     }
 
     @Override
     public List<ParkingRecord> findAll() {
         return parkingRecordDao.selectAll();
+    }
+
+    @Override
+    public PageResult findPage(PageRequest pageRequest) {
+        return PageUtils.getPageResult(pageRequest,getPageInfo(pageRequest));
+    }
+
+    @Override
+    public Integer update(ParkingRecord parkingRecord) {
+        return parkingRecordDao.updateByPrimaryKeySelective(parkingRecord);
+    }
+
+    @Override
+    public List<ParkingRecord> searchRecordByParkingLot(String parkLot) {
+        return parkingRecordDao.searchByLicense(parkLot);
+    }
+
+    private PageInfo<ParkingRecord> getPageInfo(PageRequest pageRequest) {
+        int pageNum = pageRequest.getPageNum();
+        int pageSize = pageRequest.getPageSize();
+        PageHelper.startPage(pageNum, pageSize);
+        List<ParkingRecord> sysMenus = parkingRecordDao.selectAll();
+        return new PageInfo<ParkingRecord>(sysMenus);
     }
 }

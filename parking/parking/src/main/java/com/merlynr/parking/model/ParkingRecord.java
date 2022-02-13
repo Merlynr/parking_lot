@@ -15,6 +15,8 @@ public class ParkingRecord implements Serializable {
      */
     private Integer id;
 
+    private String license;
+
     /**
      * 用户
      */

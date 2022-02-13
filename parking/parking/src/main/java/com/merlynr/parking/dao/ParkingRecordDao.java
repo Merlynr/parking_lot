@@ -1,6 +1,5 @@
 package com.merlynr.parking.dao;
 
-import com.merlynr.parking.model.ParkingLot;
 import com.merlynr.parking.model.ParkingRecord;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,4 +19,6 @@ public interface ParkingRecordDao {
 
     int updateByPrimaryKey(ParkingRecord record);
     List<ParkingRecord> selectAll();
+
+    List<ParkingRecord> searchByLicense(String license);
 }

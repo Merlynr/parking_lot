@@ -24,4 +24,6 @@ public interface UsersDao {
     Users findByUsername(String userName);
 
     List<Users> selectByTelAndPlates(String tel,String licensePlates);
+
+    Users searchByLicense(String licensePlates);
 }

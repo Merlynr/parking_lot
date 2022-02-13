@@ -43,6 +43,7 @@
                       <template slot="title"><i class="el-icon-setting"></i>统计报表</template>
                           <el-menu-item index="/user">收入报表</el-menu-item>
                   </el-submenu>
+                  <el-menu-item index="/record">传入摄像图片</el-menu-item>
               </el-menu>
           </el-aside>
           <el-main class="content">

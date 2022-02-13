@@ -173,4 +173,10 @@
     from users
     where user_name = #{userName,jdbcType=VARCHAR}
   </select>
+  <select id="searchByLicense" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from users
+    where license_plates = #{licensePlates,jdbcType=VARCHAR}
+  </select>
 </mapper>
