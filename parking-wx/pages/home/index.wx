@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-15 20:00:06
- * @LastEditTime: 2022-02-15 22:39:01
+ * @LastEditTime: 2022-02-15 22:47:01
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\home\index.wx
@@ -82,9 +82,11 @@ export default {
     four: "",
     five: "",
     six: "",
-    seven: ""
+    seven: "",
+    parkingRecord: ""
   },
   submit: function() {
+    let that = this;
     let str =
       this.data.one +
       this.data.two +
@@ -94,19 +96,27 @@ export default {
       this.data.six +
       this.data.seven;
     if (str.length == 7) {
-      wx.showToast({
-            title: '成功',
-            icon: 'succes',
+      wx.request({
+        url: "http://127.0.0.1:8848/api/TODO",
+        success(res) {
+          wx.showToast({
+            title: "成功",
+            icon: "success",
             duration: 1000,
-            mask:true
-        })
-    }else{
+            mask: true
+          });
+          that.setData({
+            parkingRecord: res.data
+          });
+        }
+      });
+    } else {
       wx.showToast({
-            title: '未填写完整',
-            icon: 'error',
-            duration: 1000,
-            mask:true
-        })
+        title: "未填写完整",
+        icon: "error",
+        duration: 1000,
+        mask: true
+      });
     }
   }
 };
