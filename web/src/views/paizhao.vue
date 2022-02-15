@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-12 17:16:16
- * @LastEditTime: 2022-02-13 22:53:45
+ * @LastEditTime: 2022-02-14 17:33:16
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\paizhao.vue
@@ -10,7 +10,14 @@
 <template>
   <div>
     <input type="file" id="inputfile" @change="imgbase()" />
-    <el-button icon="el-icon-search" circle @click="paizhao"></el-button>
+    <el-button-group>
+      <el-button type="primary" @click="paizhao('in')" icon="el-icon-arrow-left"
+        >进库</el-button
+      >
+      <el-button type="primary" @click="paizhao('out')"
+        >出库<i class="el-icon-arrow-right el-icon--right"></i
+      ></el-button>
+    </el-button-group>
   </div>
 </template>
 
@@ -20,6 +27,7 @@ export default {
     return {
       license_img: "",
       tParking: [],
+      time: "",
     };
   },
   created() {
@@ -67,13 +75,14 @@ export default {
         };
       }
     },
-    async paizhao() {
+    async paizhao(car) {
       let img = "image=" + encodeURIComponent(this.license_img.slice(23));
       const res = await this.$httpX.post("", img);
       let license = res.data.words_result.number;
-      this.searchFromLicense(license);
+      this.searchFromLicense(license, car);
     },
-    async searchFromLicense(license) {
+    async searchFromLicense(license, car) {
+      this.searchUnusedTempParking();
       const res = await this.$http.get("/api/user/findByLicense", {
         params: {
           license_plates: license,
@@ -87,32 +96,42 @@ export default {
         },
       });
       let parkingRecord = resIn.data.data;
+      console.log(parkingRecord);
+      console.log(this.tParking)
+      // 是否为月租用户
       if (user == null) {
-        // parkingRecord.sort(function (a, b) {
-        //   return (
-        //     Date.parse(b.startTime.replace(/-/g, "/")) -
-        //     Date.parse(a.startTime.replace(/-/g, "/"))
-        //   );
-        // });
-        console.log(parkingRecord);
-        console.log("临时用户的进出z");
-        // if (parkingRecord == null) {
-        const res1 = this.$http.post("/api/parking/add", {
-          license: license,
-          user: res.data.name,
-          // TODO 时区存在问题
-          startTime: new Date('June 15, 2019 23:15:30 GMT+10:00'),
-          parkingLot: this.tParking[0].id,
-          carIn: this.license_img,
-        });
-        this.zhanyong(this.tParking[0].id,1)
-        console.log(res1);
-        // } else {
-        //   console.log("出");
-        // }
+        // 临时用户
+        if (car == "in") {
+          // 车进入
+          this.$http.post("/api/parking/add", {
+            license: license,
+            startTime: new Date(),
+            parkingLot: this.tParking[0].id,
+            carIn: this.license_img,
+          });
+          this.zhanyong(this.tParking[0].id, 1);
+        }
+        if (car == "out") {
+          // 车出去
+          console.log("车出去");
+        }
       } else {
-        // 月租用户的进出
-        console.log("月租用户的进出");
+        // 月租用户
+        if (car == "in") {
+          // 车进入
+          this.$http.post("/api/parking/add", {
+            license: license,
+            user: user.name,
+            startTime: new Date(),
+            parkingLot: this.tParking[0].id,
+            carIn: this.license_img,
+          });
+          this.zhanyong(this.tParking[0].id, 1);
+        }
+        if (car == "out") {
+          // 车出去
+          console.log("车出去");
+        }
       }
     },
     async searchUnusedTempParking() {

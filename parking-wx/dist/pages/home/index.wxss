@@ -24,7 +24,21 @@
   align-items: center;
   justify-content: center;
 }
-
-.start-input{
-  
+.starContent {
+  padding: 50px 50px 0px 50px;
+  text-align: center;
+}
+.buttonContent {
+  padding: 50px;
+  text-align: center;
+}
+.star-input {
+  display: inline-block;
+  border: 1px solid;
+  width: 20px;
+  margin-right: 8px;
+}
+#start-tag {
+  display: block;
+  background-color: #22baac;
 }

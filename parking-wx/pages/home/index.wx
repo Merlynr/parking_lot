@@ -1,0 +1,137 @@
+<!--
+ * @Author: Merlynr
+ * @Date: 2022-02-15 20:00:06
+ * @LastEditTime: 2022-02-15 22:39:01
+ * @LastEditors: your name
+ * @Description: 
+ * @FilePath: \parking-wx\pages\home\index.wx
+ * 少年强，中国强！
+-->
+<template>
+  <view>
+    <view class="starContent">
+      <view id="start-tag">
+        <i style="font-size:20px;font:strong;color:white">请输入车牌号</i>
+      </view>
+      <view style="display:block;border:1px solid black;padding-bottom:10px;padding-top:10px">
+        <input
+          maxlength=1
+          class="star-input"
+          style="margin-left:3px"
+          type="text"
+          model:value="{{one}}"
+        />
+        <input
+          maxlength=1
+          class="star-input"
+          type="text"
+          model:value="{{two}}"
+        />
+        <input
+          maxlength=1
+          class="star-input"
+          type="text"
+          model:value="{{three}}"
+        />
+        <input
+          maxlength=1
+          class="star-input"
+          type="text"
+          model:value="{{four}}"
+        />
+        <input
+          maxlength=1
+          class="star-input"
+          type="text"
+          model:value="{{five}}"
+        />
+        <input
+          maxlength=1
+          class="star-input"
+          type="text"
+          model:value="{{six}}"
+        />
+        <input
+          maxlength=1
+          class="star-input"
+          type="text"
+          model:value="{{seven}}"
+        />
+      </view>
+    </view>
+    <view class="buttonContent">
+      <button
+        type="submit"
+        bindtap="submit"
+      >提交</button>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: "首页",
+    backgroundColor: "#F4F4F4",
+    navigationBarTextStyle: "black"
+  },
+  data: {
+    one: "",
+    two: "",
+    three: "",
+    four: "",
+    five: "",
+    six: "",
+    seven: ""
+  },
+  submit: function() {
+    let str =
+      this.data.one +
+      this.data.two +
+      this.data.three +
+      this.data.four +
+      this.data.five +
+      this.data.six +
+      this.data.seven;
+    if (str.length == 7) {
+      wx.showToast({
+            title: '成功',
+            icon: 'succes',
+            duration: 1000,
+            mask:true
+        })
+    }else{
+      wx.showToast({
+            title: '未填写完整',
+            icon: 'error',
+            duration: 1000,
+            mask:true
+        })
+    }
+  }
+};
+</script>
+
+<style lang="less">
+.content {
+  .mix-flex-center();
+}
+.starContent {
+  padding: 50px 50px 0px 50px;
+  text-align: center;
+}
+.buttonContent {
+  padding: 50px;
+  text-align: center;
+}
+.star-input {
+  display: inline-block;
+  border: 1px solid;
+  width: 20px;
+  margin-right: 8px;
+}
+#start-tag {
+  display: block;
+  background-color: #22baac;
+}
+</style>

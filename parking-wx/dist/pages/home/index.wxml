@@ -1,0 +1,19 @@
+<view>
+  <view class="starContent">
+    <view id="start-tag">
+      <i style="font-size:20px;font:strong;color:white">请输入车牌号</i>
+    </view>
+    <view style="display:block;border:1px solid black;padding-bottom:10px;padding-top:10px">
+      <input maxlength="1" class="star-input" style="margin-left:3px" type="text" model:value="{{one}}"></input>
+      <input maxlength="1" class="star-input" type="text" model:value="{{two}}"></input>
+      <input maxlength="1" class="star-input" type="text" model:value="{{three}}"></input>
+      <input maxlength="1" class="star-input" type="text" model:value="{{four}}"></input>
+      <input maxlength="1" class="star-input" type="text" model:value="{{five}}"></input>
+      <input maxlength="1" class="star-input" type="text" model:value="{{six}}"></input>
+      <input maxlength="1" class="star-input" type="text" model:value="{{seven}}"></input>
+    </view>
+  </view>
+  <view class="buttonContent">
+    <button type="submit" bindtap="submit">提交</button>
+  </view>
+</view>
