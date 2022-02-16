@@ -113,7 +113,7 @@ export default {
         }
         if (car == "out") {
           // 车出去
-          console.log("车出去");
+          
         }
       } else {
         // 月租用户

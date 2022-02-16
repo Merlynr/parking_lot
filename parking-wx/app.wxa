@@ -23,9 +23,9 @@
       networkTimeout: {
         request: 10000
       },
-      theme: {
+      
         'theme-color': '#39f'
-      }
+      
     },
     globalData: { },
     onLaunch () { 
