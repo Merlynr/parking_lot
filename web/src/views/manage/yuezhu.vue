@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:45:33
- * @LastEditTime: 2022-02-12 17:05:49
+ * @LastEditTime: 2022-02-16 17:23:35
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\manage\yuezhu.vue
@@ -268,7 +268,7 @@ export default {
       this.form.parkingLot = row.parkingLotId;
       this.isOpenEditors = true;
       this.form.id = row.id;
-      this.zhanyong(row.parkingLot,0)
+      // this.zhanyong(row.parkingLot,0)
       this.findByPage();
     },
     handleDelete(index, row) {
@@ -305,7 +305,7 @@ export default {
         parkingLotId: this.selectValue,
         license: this.form.license_img,
       };
-      this.zhanyong(this.selectValue,1)
+      // this.zhanyong(this.selectValue,1)
       if (this.isUpdateState) {
         await this.$http.post("/api/user/updateUserInfo", baseForm);
         this.isUpdateState = false;

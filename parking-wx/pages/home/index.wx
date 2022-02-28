@@ -1,7 +1,8 @@
 <!--
+import { async } from '../../utils/runtime/runtime';
  * @Author: Merlynr
  * @Date: 2022-02-15 20:00:06
- * @LastEditTime: 2022-02-16 14:52:06
+ * @LastEditTime: 2022-02-21 00:10:06
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\home\index.wx
@@ -67,8 +68,8 @@
     </view>
   </view>
 </template>
-
 <script>
+const regenerator = require("../../utils/runtime");
 export default {
   config: {
     navigationBarTitleText: "首页",
@@ -83,42 +84,26 @@ export default {
     five: "",
     six: "",
     seven: "",
-    user: ""
+    user: "",
+    parkingRecords: []
   },
-  submit: function() {
+  submit: async function() {
     let that = this;
-    let str =
+    let str = (
       this.data.one +
       this.data.two +
       this.data.three +
       this.data.four +
       this.data.five +
       this.data.six +
-      this.data.seven;
+      this.data.seven
+    ).toString();
     if (str.length == 7) {
-      wx.request({
-        method: "GET",
-        url: "http://127.0.0.1:8848/api/user/findByLicense",
-        header: {
-          token:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
-        },
-        data: {
-          license_plates: str
-        },
-        success(res) {
-          wx.showToast({
-            title: "成功",
-            icon: "success",
-            duration: 1000,
-            mask: true
-          });
-          that.setData({
-            user: res.data
-          });
-        }
-      });
-      console.log(this.data.user);
+      await this.searchUser(str);
+      await this.searchRecord(str);
+      setTimeout(() => {
+        this.panduan();
+      }, 300);
     } else {
       wx.showToast({
         title: "未填写完整",
@@ -127,6 +112,95 @@ export default {
         mask: true
       });
     }
+  },
+  panduan: function() {
+    let that = this;
+    if (this.data.user == "") {
+      // 临时用户出
+      console.log("临时用户");
+    } else {
+      // 月租用户出
+      console.log("月租用户");
+      console.log(this.data.parkingRecords)
+      this.yuezhuCarOut()
+    }
+  },
+  searchUser: function(license_plates) {
+    let that = this;
+    wx.request({
+      method: "GET",
+      url: "http://127.0.0.1:8848/api/user/findByLicense",
+      header: {
+        token:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
+      },
+      data: {
+        license_plates: license_plates
+      },
+      success(res) {
+        wx.showToast({
+          title: "成功",
+          icon: "success",
+          duration: 1000,
+          mask: true
+        });
+        that.setData({
+          user: res.data.data
+        });
+      }
+    });
+  },
+  searchRecord: function(license) {
+    let that = this;
+    wx.request({
+      method: "GET",
+      url: "http://127.0.0.1:8848/api/parking/searchByLicense",
+      header: {
+        token:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
+      },
+      data: {
+        licensePlates: license
+      },
+      success(res) {
+        wx.showToast({
+          title: "成功",
+          icon: "success",
+          duration: 1000,
+          mask: true
+        });
+        that.setData({
+          parkingRecords: res.data.data
+        });
+      }
+    });
+  },
+  yuezhuCarOut: function(license) {
+    let that = this;
+    let mId = that.data.parkingRecords.length
+    wx.request({
+      method: "POST",
+      url: "http://127.0.0.1:8848/api/parking/update",
+      header: {
+        token:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
+      },
+      data: {
+        id: that.data.parkingRecords[mId-1].id,
+        endTime: new Date()
+      },
+      success(res) {
+        wx.showToast({
+          title: "成功",
+          icon: "success",
+          duration: 1000,
+          mask: true
+        });
+        that.setData({
+          parkingRecords: res.data.data
+        });
+      }
+    });
   }
 };
 </script>
