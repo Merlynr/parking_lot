@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:46:21
- * @LastEditTime: 2022-03-01 22:40:29
+ * @LastEditTime: 2022-03-03 22:42:38
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\acess_info\chuchang.vue
@@ -112,16 +112,16 @@ export default {
           licensePlates:this.searchForm.license_plates
         }
       });
-      this.tableData = res.data.data.content;
-      this.total = res.data.data.totalSize;
+      this.tableData = this.isChu(res.data.data.content);
+      this.total = this.isChu(res.data.data.content).length;
     },
     async getTableData() {
       const res = await this.$http.post("/api/parking/findByPage", {
         pageNum: this.pageNum,
         pageSize: this.pageSize,
       });
-      this.tableData = res.data.data.content;
-      this.total = res.data.data.totalSize;
+      this.tableData = await this.isChu(res.data.data.content);
+      this.total = await this.isChu(res.data.data.content).length;
     },
     sizeChange(size) {
       this.pageSize = size;
@@ -134,7 +134,15 @@ export default {
     handleEdit(row,value) {
       console.log(row,value);
     },
-
+    isChu(list) {
+      let newList = [];
+      list.forEach(row => {
+        if (row.startTime != null && row.endTime != null) {
+          newList.push(row);
+        }
+      });
+      return newList;
+    }
   }
 };
 </script>
