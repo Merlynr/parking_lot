@@ -8,9 +8,15 @@ import com.merlynr.parking.common.PageUtils;
 import com.merlynr.parking.dao.ParkingRecordDao;
 import com.merlynr.parking.model.ParkingRecord;
 import com.merlynr.parking.service.ParkingRecordService;
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,6 +61,18 @@ public class ParkingRecordServiceImpl implements ParkingRecordService {
     @Override
     public List<ParkingRecord> searchRecordByParkingLot(String parkLot) {
         return parkingRecordDao.searchByLicense(parkLot);
+    }
+
+    @Override
+    public List<ParkingRecord> searchRecordByTimes(String startTime, String endTime, String parkLot) throws ParseException {
+//        System.out.println(startTime);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date start = sdf.parse(startTime);
+        Date end = sdf.parse(endTime);
+        Timestamp startTimestamp =new Timestamp(start.getTime());
+        Timestamp endTimestamp = new Timestamp(end.getTime());
+        System.out.println(startTimestamp);
+        return parkingRecordDao.searchRecordByTimes(startTimestamp,endTimestamp,parkLot);
     }
 
     private PageInfo<ParkingRecord> getPageInfo(PageRequest pageRequest) {

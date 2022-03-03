@@ -12,5 +12,8 @@
   "networkTimeout": {
     "request": 10000
   },
-  "theme": "blue"
+  "theme-color": "#39f",
+  "theme": {
+    "theme-color": "#39f"
+  }
 }

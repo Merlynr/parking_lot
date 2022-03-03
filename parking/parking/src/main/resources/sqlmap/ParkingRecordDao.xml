@@ -154,4 +154,19 @@
     from parking_record
     where license = #{license,jdbcType=VARCHAR}
   </select>
+    <select id="searchRecordByTimes" resultType="com.merlynr.parking.model.ParkingRecord">
+      select
+      <include refid="Base_Column_List" />
+      from parking_record
+      where
+      <if test="license!=null and license!=''">
+            license = #{license,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime!=null">
+            and start_time <![CDATA[>=]]> #{startTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="endTime!=null">
+            and end_time <![CDATA[<=]]>  #{endTime,jdbcType=TIMESTAMP}
+      </if>
+    </select>
 </mapper>

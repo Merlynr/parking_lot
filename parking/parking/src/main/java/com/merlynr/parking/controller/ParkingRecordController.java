@@ -9,6 +9,9 @@ import com.merlynr.parking.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -84,5 +87,11 @@ public class ParkingRecordController {
         }else {
             return parkingRecordService.searchRecordByParkingLot(licensePlates);
         }
+    }
+
+    @UserLoginToken
+    @GetMapping("searchByTimes")
+    public List<ParkingRecord> searchByTimes(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime, @RequestParam("licensePlates")  String licensePlates) throws ParseException {
+        return parkingRecordService.searchRecordByTimes(startTime,endTime,licensePlates);
     }
 }

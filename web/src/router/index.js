@@ -22,6 +22,12 @@ const routes = [
       },{
         path:'/record',
         component: () => import("../views/paizhao.vue")
+      },{
+        path:'/churu',
+        component: () => import("../views/acess_info/chuchang.vue")
+      },{
+        path:'/jinru',
+        component: () => import("../views/acess_info/ruchuang.vue")
       }
       // {
       //   path: '/performance',

@@ -74,14 +74,24 @@ exports.default = Page({
   }(),
   panduan: function panduan() {
     var that = this;
-    if (this.data.user == "") {
-      // 临时用户出
-      console.log("临时用户");
+    console.log(that.data.user);
+    console.log(this.data.parkingRecords);
+    if (that.data.parkingRecords == null || that.data.parkingRecords.length == 0) {
+      wx.showToast({
+        title: "该车辆无停车记录",
+        icon: "success",
+        duration: 1000,
+        mask: true
+      });
     } else {
-      // 月租用户出
-      console.log("月租用户");
-      console.log(this.data.parkingRecords);
-      this.yuezhuCarOut();
+      if (that.data.user == "" || that.data.user == null) {
+        // 临时用户出
+        console.log("临时用户");
+      } else {
+        // 月租用户出
+        console.log("月租用户");
+        this.yuezhuCarOut();
+      }
     }
   },
   searchUser: function searchUser(license_plates) {
@@ -96,12 +106,6 @@ exports.default = Page({
         license_plates: license_plates
       },
       success: function success(res) {
-        wx.showToast({
-          title: "成功",
-          icon: "success",
-          duration: 1000,
-          mask: true
-        });
         that.setData({
           user: res.data.data
         });
@@ -120,42 +124,37 @@ exports.default = Page({
         licensePlates: license
       },
       success: function success(res) {
-        wx.showToast({
-          title: "成功",
-          icon: "success",
-          duration: 1000,
-          mask: true
-        });
         that.setData({
           parkingRecords: res.data.data
         });
       }
     });
   },
+  linshiCarOut: function linshiCarOut(lincense) {
+    // 获取计费算法，并进行计算
+  },
   yuezhuCarOut: function yuezhuCarOut(license) {
     var that = this;
     var mId = that.data.parkingRecords.length;
-    wx.request({
-      method: "POST",
-      url: "http://127.0.0.1:8848/api/parking/update",
-      header: {
-        token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
-      },
-      data: {
-        id: that.data.parkingRecords[mId - 1].id,
-        endTime: new Date()
-      },
-      success: function success(res) {
-        wx.showToast({
-          title: "成功",
-          icon: "success",
-          duration: 1000,
-          mask: true
-        });
-        that.setData({
-          parkingRecords: res.data.data
-        });
-      }
-    });
+    if (that.data.parkingRecords[mId - 1].endTime == null || that.data.parkingRecords[mId - 1].endTime == "") {
+      wx.request({
+        method: "POST",
+        url: "http://127.0.0.1:8848/api/parking/update",
+        header: {
+          token: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
+        },
+        data: {
+          id: that.data.parkingRecords[mId - 1].id,
+          endTime: new Date()
+        }
+      });
+    } else {
+      wx.showToast({
+        title: "该车辆无停车记录",
+        icon: "success",
+        duration: 1000,
+        mask: true
+      });
+    }
   }
 });

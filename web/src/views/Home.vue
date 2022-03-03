@@ -29,8 +29,8 @@
                   </el-submenu>
                   <el-submenu index="2">
                       <template slot="title"><i class="el-icon-setting"></i>通行信息</template>
-                          <el-menu-item index="/">出场记录</el-menu-item>
-                          <el-menu-item index="/">入场记录</el-menu-item>
+                          <el-menu-item index="/churu">出场记录</el-menu-item>
+                          <el-menu-item index="/jinru">入场记录</el-menu-item>
                   </el-submenu>
                   <el-submenu index="3">
                       <template slot="title"><i class="el-icon-document"></i>缴费信息</template>

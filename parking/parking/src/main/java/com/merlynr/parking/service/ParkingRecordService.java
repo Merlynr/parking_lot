@@ -3,8 +3,11 @@ package com.merlynr.parking.service;
 import com.merlynr.parking.common.PageRequest;
 import com.merlynr.parking.common.PageResult;
 import com.merlynr.parking.model.ParkingRecord;
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,4 +24,5 @@ public interface ParkingRecordService {
     PageResult findPage(PageRequest pageRequest);
     Integer update(ParkingRecord parkingRecord);
     List<ParkingRecord> searchRecordByParkingLot(String parkLot);
+    List<ParkingRecord> searchRecordByTimes(String startTime,String endTime,String parkLot) throws ParseException;
 }
