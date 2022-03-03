@@ -65,13 +65,11 @@ public class ParkingRecordServiceImpl implements ParkingRecordService {
 
     @Override
     public List<ParkingRecord> searchRecordByTimes(String startTime, String endTime, String parkLot) throws ParseException {
-//        System.out.println(startTime);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date start = sdf.parse(startTime);
         Date end = sdf.parse(endTime);
         Timestamp startTimestamp =new Timestamp(start.getTime());
         Timestamp endTimestamp = new Timestamp(end.getTime());
-        System.out.println(startTimestamp);
         return parkingRecordDao.searchRecordByTimes(startTimestamp,endTimestamp,parkLot);
     }
 

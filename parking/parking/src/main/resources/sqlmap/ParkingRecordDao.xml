@@ -154,19 +154,20 @@
     from parking_record
     where license = #{license,jdbcType=VARCHAR}
   </select>
-    <select id="searchRecordByTimes" resultType="com.merlynr.parking.model.ParkingRecord">
+    <select id="searchRecordByTimes" resultType="com.merlynr.parking.model.ParkingRecord" resultMap="BaseResultMap">
       select
       <include refid="Base_Column_List" />
       from parking_record
-      where
-      <if test="license!=null and license!=''">
-            license = #{license,jdbcType=VARCHAR}
-      </if>
+      <where>
       <if test="startTime!=null">
-            and start_time <![CDATA[>=]]> #{startTime,jdbcType=TIMESTAMP}
+            start_time >= #{startTime}
       </if>
       <if test="endTime!=null">
-            and end_time <![CDATA[<=]]>  #{endTime,jdbcType=TIMESTAMP}
+            and end_time <![CDATA[<=]]>  #{endTime}
       </if>
+      <if test="license!=null and license!=''">
+        and  license = #{license,jdbcType=VARCHAR}
+      </if>
+      </where>
     </select>
 </mapper>

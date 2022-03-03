@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:46:29
- * @LastEditTime: 2022-03-03 21:20:28
+ * @LastEditTime: 2022-03-03 22:06:28
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\acess_info\ruchuang.vue
@@ -118,8 +118,8 @@ export default {
     this.getTableData();
   },
   methods: {
-    search() {
-      const res = this.$http.get("/api/parking/searchByTimes", {
+    async search() {
+      const res =await this.$http.get("/api/parking/searchByTimes", {
         params: {
           startTime: this.searchForm.time[0],
           endTime: this.searchForm.time[1],
@@ -127,9 +127,8 @@ export default {
         }
       });
     
-      this.tableData = res.data;
-    //   this.total = length(res.data);
-    console.log(res);
+      this.tableData = res.data.data;
+      this.total = res.data.data.length;
     },
     async getTableData() {
       const res = await this.$http.post("/api/parking/findByPage", {
