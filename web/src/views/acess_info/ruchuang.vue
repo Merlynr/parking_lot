@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:46:29
- * @LastEditTime: 2022-03-03 22:43:00
+ * @LastEditTime: 2022-03-04 10:16:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\acess_info\ruchuang.vue
@@ -79,36 +79,29 @@
   </div>
   </template>
   </el-table-column>
-  <el-table-column
-    prop="money"
-    label="费用"
-    width="80"
-  >
+  <el-table-column label="操作">
+    <template slot-scope="scope">
+      <el-button
+        size="mini"
+        @click="handleEdit(scope.$index, scope.row)"
+      >查看</el-button>
 
-    </el-table-column>
-    <el-table-column label="操作">
-      <template slot-scope="scope">
-        <el-button
-          size="mini"
-          @click="handleEdit(scope.$index, scope.row)"
-        >查看</el-button>
-
-      </template>
-    </el-table-column>
-    </el-table>
-    <el-pagination
-      background
-      style="position: absolute; bottom: 50px"
-      layout="sizes, prev, pager, next"
-      :page-size="pageSize"
-      :page-sizes="[5, 10, 20, 50]"
-      :current-page="pageNum"
-      :total="total"
-      class="pagination"
-      @size-change="sizeChange"
-      @current-change="currentChange"
-    ></el-pagination>
-      </div>
+    </template>
+  </el-table-column>
+  </el-table>
+  <el-pagination
+    background
+    style="position: absolute; bottom: 50px"
+    layout="sizes, prev, pager, next"
+    :page-size="pageSize"
+    :page-sizes="[5, 10, 20, 50]"
+    :current-page="pageNum"
+    :total="total"
+    class="pagination"
+    @size-change="sizeChange"
+    @current-change="currentChange"
+  ></el-pagination>
+    </div>
 </template>
 <script>
 export default {
@@ -142,7 +135,7 @@ export default {
       this.total = this.isRu(res.data.data.data).length;
     },
     async getTableData() {
-      let chewei =await this.$http.get("/api/yuezhu/list");
+      let chewei = await this.$http.get("/api/yuezhu/list");
       this.allList = chewei.data.data;
       const res = await this.$http.post("/api/parking/findByPage", {
         pageNum: this.pageNum,
@@ -159,8 +152,9 @@ export default {
       this.pageNum = page;
       this.getTableData();
     },
-    handleEdit(row, value) {
-      console.log(row, value);
+    handleEdit(index, row) {
+      window.localStorage.setItem("carInfo", JSON.stringify(row));
+      this.$router.push("/img");
     },
     isRu(list) {
       let newList = [];

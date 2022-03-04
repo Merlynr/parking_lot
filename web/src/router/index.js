@@ -28,6 +28,9 @@ const routes = [
       },{
         path:'/jinru',
         component: () => import("../views/acess_info/ruchuang.vue")
+      },{
+        path:'/img',
+        component: () => import("../views/record.vue")
       }
       // {
       //   path: '/performance',

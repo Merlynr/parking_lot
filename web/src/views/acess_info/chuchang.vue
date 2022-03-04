@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:46:21
- * @LastEditTime: 2022-03-03 22:42:38
+ * @LastEditTime: 2022-03-04 10:15:54
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\acess_info\chuchang.vue
@@ -37,55 +37,59 @@
         style="width: 100%; position: absolute; top: 140px"
         height="450"
       >
-      <el-table-column type="index" width="50" label="序号"> </el-table-column>
         <el-table-column
-          prop="license"
-          label="车牌"
-          width="260"
+          type="index"
+          width="50"
+          label="序号"
         > </el-table-column>
           <el-table-column
-          type="time"
-            prop="startTime"
-            label="入场时间"
-            width="300"
-          >
-    
-            </el-table-column>
+            prop="license"
+            label="车牌"
+            width="260"
+          > </el-table-column>
             <el-table-column
-              prop="endTime"
-              label="出场时间"
-              width="360"
+              type="time"
+              prop="startTime"
+              label="入场时间"
+              width="300"
             >
+
               </el-table-column>
               <el-table-column
-                prop="money"
-                label="费用"
-                width="200"
+                prop="endTime"
+                label="出场时间"
+                width="360"
               >
-               
                 </el-table-column>
-                <el-table-column label="操作">
-                  <template slot-scope="scope">
-                    <el-button
-                      size="mini"
-                      @click="handleEdit(scope.$index, scope.row)"
-                    >查看</el-button>
-                    
-                  </template>
-                </el-table-column>
-                </el-table>
-                <el-pagination
-                  background
-                  style="position: absolute; bottom: 50px"
-                  layout="sizes, prev, pager, next"
-                  :page-size="pageSize"
-                  :page-sizes="[5, 10, 20, 50]"
-                  :current-page="pageNum"
-                  :total="total"
-                  class="pagination"
-                  @size-change="sizeChange"
-                  @current-change="currentChange"
-                ></el-pagination>
+                <el-table-column
+                  prop="money"
+                  label="费用"
+                  width="200"
+                >
+
+                  </el-table-column>
+                  <el-table-column label="操作">
+                    <template slot-scope="scope">
+                      <el-button
+                        size="mini"
+                        @click="handleEdit(scope.$index, scope.row)"
+                      >查看</el-button>
+
+                    </template>
+                  </el-table-column>
+                  </el-table>
+                  <el-pagination
+                    background
+                    style="position: absolute; bottom: 50px"
+                    layout="sizes, prev, pager, next"
+                    :page-size="pageSize"
+                    :page-sizes="[5, 10, 20, 50]"
+                    :current-page="pageNum"
+                    :total="total"
+                    class="pagination"
+                    @size-change="sizeChange"
+                    @current-change="currentChange"
+                  ></el-pagination>
   </div>
 </template>
 <script>
@@ -103,13 +107,13 @@ export default {
     };
   },
   created() {
-    this.getTableData()
+    this.getTableData();
   },
   methods: {
-    search(){
-      const res= this.$http.get("/api/parking/searchByLicense",{
+    search() {
+      const res = this.$http.get("/api/parking/searchByLicense", {
         params: {
-          licensePlates:this.searchForm.license_plates
+          licensePlates: this.searchForm.license_plates
         }
       });
       this.tableData = this.isChu(res.data.data.content);
@@ -118,7 +122,7 @@ export default {
     async getTableData() {
       const res = await this.$http.post("/api/parking/findByPage", {
         pageNum: this.pageNum,
-        pageSize: this.pageSize,
+        pageSize: this.pageSize
       });
       this.tableData = await this.isChu(res.data.data.content);
       this.total = await this.isChu(res.data.data.content).length;
@@ -131,8 +135,9 @@ export default {
       this.pageNum = page;
       this.getTableData();
     },
-    handleEdit(row,value) {
-      console.log(row,value);
+    handleEdit(index, row) {
+      window.localStorage.setItem("carInfo", JSON.stringify(row));
+      this.$router.push("/img");
     },
     isChu(list) {
       let newList = [];
