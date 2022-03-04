@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:46:21
- * @LastEditTime: 2022-03-04 10:15:54
+ * @LastEditTime: 2022-03-04 10:37:51
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\acess_info\chuchang.vue
@@ -53,7 +53,6 @@
               label="入场时间"
               width="300"
             >
-
               </el-table-column>
               <el-table-column
                 prop="endTime"
@@ -66,7 +65,9 @@
                   label="费用"
                   width="200"
                 >
-
+ <template slot-scope="scope">
+                      {{scope.row.user?'月租用户':scope.row.money}}
+                    </template>
                   </el-table-column>
                   <el-table-column label="操作">
                     <template slot-scope="scope">
@@ -122,7 +123,7 @@ export default {
     async getTableData() {
       const res = await this.$http.post("/api/parking/findByPage", {
         pageNum: this.pageNum,
-        pageSize: this.pageSize
+        pageSize: this.pageSize + 5
       });
       this.tableData = await this.isChu(res.data.data.content);
       this.total = await this.isChu(res.data.data.content).length;

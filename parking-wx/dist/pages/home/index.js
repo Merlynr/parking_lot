@@ -87,6 +87,7 @@ exports.default = Page({
       if (that.data.user == "" || that.data.user == null) {
         // 临时用户出
         console.log("临时用户");
+        this.yuezhuCarOut(20);
       } else {
         // 月租用户出
         console.log("月租用户");
@@ -133,8 +134,9 @@ exports.default = Page({
   linshiCarOut: function linshiCarOut(lincense) {
     // 获取计费算法，并进行计算
   },
-  yuezhuCarOut: function yuezhuCarOut(license) {
+  yuezhuCarOut: function yuezhuCarOut(money) {
     var that = this;
+    var Smoney = money;
     var mId = that.data.parkingRecords.length;
     if (that.data.parkingRecords[mId - 1].endTime == null || that.data.parkingRecords[mId - 1].endTime == "") {
       wx.request({
@@ -145,7 +147,8 @@ exports.default = Page({
         },
         data: {
           id: that.data.parkingRecords[mId - 1].id,
-          endTime: new Date()
+          endTime: new Date(),
+          money: Smoney
         }
       });
     } else {
