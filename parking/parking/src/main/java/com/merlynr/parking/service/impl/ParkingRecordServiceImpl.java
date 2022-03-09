@@ -73,6 +73,19 @@ public class ParkingRecordServiceImpl implements ParkingRecordService {
         return parkingRecordDao.searchRecordByTimes(startTimestamp,endTimestamp,parkLot);
     }
 
+    @Override
+    public PageResult findLinShiByPage(PageRequest pageRequest) {
+        return PageUtils.getPageResult(pageRequest,getLinShiPageInfo(pageRequest));
+    }
+
+    private  PageInfo<ParkingRecord> getLinShiPageInfo(PageRequest pageRequest) {
+        int pageNum = pageRequest.getPageNum();
+        int pageSize = pageRequest.getPageSize();
+        PageHelper.startPage(pageNum, pageSize);
+        List<ParkingRecord> sysMenus = parkingRecordDao.findLinShiByPage();
+        return new PageInfo<ParkingRecord>(sysMenus);
+    }
+
     private PageInfo<ParkingRecord> getPageInfo(PageRequest pageRequest) {
         int pageNum = pageRequest.getPageNum();
         int pageSize = pageRequest.getPageSize();

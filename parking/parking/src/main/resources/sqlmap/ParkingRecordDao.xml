@@ -170,4 +170,12 @@
       </if>
       </where>
     </select>
+  <select id="findLinShiByPage" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from parking_record
+    <where>
+    money != 'null'
+    </where>
+  </select>
 </mapper>

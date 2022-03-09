@@ -34,8 +34,7 @@
                   </el-submenu>
                   <el-submenu index="3">
                       <template slot="title"><i class="el-icon-document"></i>缴费信息</template>
-                          <el-menu-item index="/">月租车辆缴费</el-menu-item>
-                          <el-menu-item index="/">临时缴费记录</el-menu-item>
+                          <el-menu-item index="/jiaofeirecord">缴费记录</el-menu-item>
                           <el-menu-item index="/yuezhujiaofeishezhi">月租车费用设置</el-menu-item>
                           <el-menu-item index="/linshijiaofeishezhi">临时费用设置</el-menu-item>
                   </el-submenu>

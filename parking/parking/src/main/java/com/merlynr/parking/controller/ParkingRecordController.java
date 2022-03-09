@@ -94,4 +94,19 @@ public class ParkingRecordController {
     public List<ParkingRecord> searchByTimes(@RequestParam("startTime") String startTime,@RequestParam("endTime") String endTime, @RequestParam("licensePlates")  String licensePlates) throws ParseException {
         return parkingRecordService.searchRecordByTimes(startTime,endTime,licensePlates);
     }
+
+    /**
+     * 获取临时车缴费记录
+     * @param pageRequest
+     * @return
+     */
+    @UserLoginToken
+    @PostMapping("findLinShiByPage")
+    public Object findLinShiByPage(@RequestBody PageRequest pageRequest){
+        if (pageRequest == null) {
+            throw new BaseException(ResponseCode.RESOURCES_NOT_EXIST);
+        }else {
+            return parkingRecordService.findLinShiByPage(pageRequest);
+        }
+    }
 }

@@ -13,3 +13,7 @@ pagehelper:
   reasonable: false
   supportMethodsArguments: true
   params: count=countSql
+#字符为空则不取
+mybatis:
+  configuration:
+    call-setters-on-nulls: true

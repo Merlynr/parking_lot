@@ -25,4 +25,5 @@ public interface ParkingRecordService {
     Integer update(ParkingRecord parkingRecord);
     List<ParkingRecord> searchRecordByParkingLot(String parkLot);
     List<ParkingRecord> searchRecordByTimes(String startTime,String endTime,String parkLot) throws ParseException;
+    PageResult findLinShiByPage(PageRequest pageRequest);
 }

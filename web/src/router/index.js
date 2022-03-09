@@ -37,6 +37,9 @@ const routes = [
       },{
         path:"/linshijiaofeishezhi",
         component: () => import("../views/jiaofei/linshifeiyong.vue")
+      },{
+        path:"/jiaofeirecord",
+        component: () => import("../views/jiaofei/linshi.vue")
       }
       // {
       //   path: '/performance',

@@ -25,4 +25,6 @@ public interface ParkingRecordDao {
     List<ParkingRecord> searchByLicense(String license);
 
     List<ParkingRecord> searchRecordByTimes(Timestamp startTime, Timestamp endTime, String license);
+
+    List<ParkingRecord> findLinShiByPage();
 }
