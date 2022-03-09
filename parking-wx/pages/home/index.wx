@@ -2,7 +2,7 @@
 import { async } from '../../utils/runtime/runtime';
  * @Author: Merlynr
  * @Date: 2022-02-15 20:00:06
- * @LastEditTime: 2022-03-04 10:31:48
+ * @LastEditTime: 2022-03-09 15:33:30
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\home\index.wx
@@ -103,6 +103,9 @@ export default {
       await this.searchRecord(str);
       setTimeout(() => {
         this.panduan();
+        wx.navigateTo({
+          url: '../money/money',
+        })
       }, 300);
     } else {
       wx.showToast({

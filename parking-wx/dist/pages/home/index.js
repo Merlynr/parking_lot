@@ -46,6 +46,9 @@ exports.default = Page({
             case 7:
               setTimeout(function () {
                 _this.panduan();
+                wx.navigateTo({
+                  url: '../money/money'
+                });
               }, 300);
               _context.next = 11;
               break;
