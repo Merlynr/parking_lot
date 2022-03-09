@@ -1,6 +1,7 @@
 package com.merlynr.parking.service;
 
 import com.merlynr.parking.model.Money;
+import com.merlynr.parking.model.MoneyRecord;
 import com.merlynr.parking.model.ParkingRecord;
 import org.springframework.stereotype.Service;
 
@@ -17,4 +18,6 @@ public interface MoneyService {
     String add(Money money);
     String delete(int id);
     List<Money> findAll();
+    Integer update(Money money);
+    Money searchByType(String type);
 }

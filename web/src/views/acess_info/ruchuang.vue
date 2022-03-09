@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-02-07 19:46:29
- * @LastEditTime: 2022-03-04 14:30:53
+ * @LastEditTime: 2022-03-07 20:32:33
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \web\src\views\acess_info\ruchuang.vue
@@ -141,7 +141,6 @@ export default {
         pageNum: this.pageNum,
         pageSize: this.pageSize+5
       });
-
       this.tableData = await this.isRu(res.data.data.content);
       this.total = await this.isRu(res.data.data.content).length;
     },

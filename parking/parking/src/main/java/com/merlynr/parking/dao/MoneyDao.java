@@ -21,4 +21,7 @@ public interface MoneyDao {
     int updateByPrimaryKey(Money record);
 
     List<Money> selectAll();
+
+    Money selectByType(String type);
+
 }

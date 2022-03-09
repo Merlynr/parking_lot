@@ -65,4 +65,10 @@
     <include refid="Base_Column_List" />
     from money
   </select>
+  <select id="selectByType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from money
+    where `type` = #{type,jdbcType=VARCHAR}
+  </select>
 </mapper>

@@ -35,4 +35,14 @@ public class MoneyServiceImpl implements MoneyService {
     public List<Money> findAll() {
         return moneyDao.selectAll();
     }
+
+    @Override
+    public Integer update(Money money) {
+        return moneyDao.updateByPrimaryKeySelective(money);
+    }
+
+    @Override
+    public Money searchByType(String type) {
+        return moneyDao.selectByType(type);
+    }
 }

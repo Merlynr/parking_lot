@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.merlynr.parking.dao.MoneyRecordDao">
+  <resultMap id="BaseResultMap" type="com.merlynr.parking.model.MoneyRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="money" jdbcType="VARCHAR" property="money" />
+    <result column="user" jdbcType="INTEGER" property="user" />
+    <result column="record" jdbcType="INTEGER" property="record" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, `time`, money, `user`, record
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from money_record
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from money_record
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.MoneyRecord" useGeneratedKeys="true">
+    insert into money_record (`time`, money, `user`, 
+      record)
+    values (#{time,jdbcType=VARCHAR}, #{money,jdbcType=VARCHAR}, #{user,jdbcType=INTEGER}, 
+      #{record,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.merlynr.parking.model.MoneyRecord" useGeneratedKeys="true">
+    insert into money_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="time != null">
+        `time`,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="user != null">
+        `user`,
+      </if>
+      <if test="record != null">
+        record,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        #{user,jdbcType=INTEGER},
+      </if>
+      <if test="record != null">
+        #{record,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.merlynr.parking.model.MoneyRecord">
+    update money_record
+    <set>
+      <if test="time != null">
+        `time` = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=VARCHAR},
+      </if>
+      <if test="user != null">
+        `user` = #{user,jdbcType=INTEGER},
+      </if>
+      <if test="record != null">
+        record = #{record,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.merlynr.parking.model.MoneyRecord">
+    update money_record
+    set `time` = #{time,jdbcType=VARCHAR},
+      money = #{money,jdbcType=VARCHAR},
+      `user` = #{user,jdbcType=INTEGER},
+      record = #{record,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from money_record
+  </select>
+</mapper>

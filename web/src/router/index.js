@@ -31,6 +31,12 @@ const routes = [
       },{
         path:'/img',
         component: () => import("../views/record.vue")
+      },{
+        path:"/yuezhujiaofeishezhi",
+        component: () => import("../views/jiaofei/yuezhu.vue")
+      },{
+        path:"/linshijiaofeishezhi",
+        component: () => import("../views/jiaofei/linshifeiyong.vue")
       }
       // {
       //   path: '/performance',
