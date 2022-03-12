@@ -19,4 +19,8 @@ public interface ParkingLotDao {
     int updateByPrimaryKey(ParkingLot record);
 
     List<ParkingLot> selectAll();
+
+    List<ParkingLot> findUnUsedFromUser();
+
+    List<ParkingLot> findUnUsedFromTemp();
 }

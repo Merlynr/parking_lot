@@ -145,10 +145,10 @@ export default {
       });
       this.tParking = indexs;
       if (indexs.length === 0) {
-        this.$message({
-          type: "error",
-          message: "无空余车位",
-        });
+        // this.$message({
+        //   type: "error",
+        //   message: "无空余车位",
+        // });
       }
     },
     zhanyong(id, yongmeiyong) {

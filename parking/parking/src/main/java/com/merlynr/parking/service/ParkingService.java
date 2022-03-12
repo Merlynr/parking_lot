@@ -21,5 +21,4 @@ public interface ParkingService {
     List<ParkingLot> findAll();
     PageResult findPage(PageRequest pageRequest);
     Integer update(ParkingLot parkingLot);
-
 }

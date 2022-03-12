@@ -89,4 +89,22 @@
     <include refid="Base_Column_List" />
     from parking_lot
   </select>
+  <select id="findUnUsedFromUser" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from parking_lot
+    <where>
+      used = '0',
+      and `type` = '1'
+    </where>
+  </select><select id="findUnUsedFromTemp" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List" />
+  from parking_lot
+  <where>
+    used = '0',
+    and `type` = '1'
+  </where>
+</select
+>
 </mapper>

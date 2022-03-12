@@ -8,7 +8,14 @@ import com.merlynr.parking.service.ParkingRecordService;
 import com.merlynr.parking.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -107,6 +114,33 @@ public class ParkingRecordController {
             throw new BaseException(ResponseCode.RESOURCES_NOT_EXIST);
         }else {
             return parkingRecordService.findLinShiByPage(pageRequest);
+        }
+    }
+
+    @RequestMapping(value = "jiaru",method = RequestMethod.POST)
+    public String jiaru(HttpServletRequest request){
+//        System.out.println(request.toString());
+//        MultipartResolver resolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+//        MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
+//        List<MultipartFile> files= ((MultipartHttpServletRequest) request).getFiles("file");
+//        String license = multipartRequest.getParameter("license");
+//        System.out.println(license);
+        JSONObject jsonParam = null;
+        try {
+            // 获取输入流
+            BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
+            // 写入数据到Stringbuilder
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = streamReader.readLine()) != null) {
+                sb.append(line);
+            }
+            jsonParam = JSONObject.parseObject(sb.toString());
+            System.out.println("AAAA");
+            return parkingRecordService.jiaru(jsonParam.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult"));
+        } catch (Exception e) {
+//            e.printStackTrace();
+            return "等待。。。";
         }
     }
 }

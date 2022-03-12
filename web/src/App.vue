@@ -14,7 +14,7 @@ export default {
   },
   async mounted() {
     if(localStorage.getItem("token")) {
-      const res = await this.$http.post("/api/user/login", {userName: "root",pwd:"123456"}, {
+      const res = await this.$http.post("/api/user/login", {userName: "admin",pwd:"123456"}, {
         headers: {
           token: localStorage.getItem("token")
         }

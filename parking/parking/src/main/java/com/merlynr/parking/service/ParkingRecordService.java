@@ -1,5 +1,6 @@
 package com.merlynr.parking.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.merlynr.parking.common.PageRequest;
 import com.merlynr.parking.common.PageResult;
 import com.merlynr.parking.model.ParkingRecord;
@@ -26,4 +27,5 @@ public interface ParkingRecordService {
     List<ParkingRecord> searchRecordByParkingLot(String parkLot);
     List<ParkingRecord> searchRecordByTimes(String startTime,String endTime,String parkLot) throws ParseException;
     PageResult findLinShiByPage(PageRequest pageRequest);
+    String jiaru(JSONObject jsonObject);
 }

@@ -42,7 +42,7 @@
       style="width: 100%; position: absolute; top: 140px"
       height="450"
     >
-      <el-table-column prop="name" label="车牌" width="260"> </el-table-column>
+      <el-table-column prop="name" label="车位号" width="260"> </el-table-column>
       <el-table-column prop="type" label="类型" width="200">
         <template slot-scope="scope">
           <el-tag v-if="scope.row.type == '1'" type="success">月租</el-tag>
