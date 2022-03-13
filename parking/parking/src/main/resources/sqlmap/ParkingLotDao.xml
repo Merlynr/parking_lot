@@ -94,7 +94,7 @@
     <include refid="Base_Column_List" />
     from parking_lot
     <where>
-      used = '0',
+      used = '0'
       and `type` = '1'
     </where>
   </select><select id="findUnUsedFromTemp" resultMap="BaseResultMap">
@@ -102,7 +102,7 @@
   <include refid="Base_Column_List" />
   from parking_lot
   <where>
-    used = '0',
+    used = '0'
     and `type` = '1'
   </where>
 </select

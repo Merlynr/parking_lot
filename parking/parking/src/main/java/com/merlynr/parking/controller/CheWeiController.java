@@ -29,6 +29,11 @@ public class CheWeiController {
     @Autowired
     private TokenService tokenService;
 
+    @GetMapping("get")
+    public  List<ParkingLot> get(){
+        return parkingService.getList();
+    }
+
     @PostMapping("add")
     public Object add(@RequestBody ParkingLot parkingLot){
         JSONObject jsonObject=new JSONObject();

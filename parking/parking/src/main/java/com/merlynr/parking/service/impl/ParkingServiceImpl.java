@@ -53,6 +53,11 @@ public class ParkingServiceImpl implements ParkingService {
         return parkingLotDao.updateByPrimaryKeySelective(parkingLot);
     }
 
+    @Override
+    public List<ParkingLot> getList() {
+        return parkingLotDao.findUnUsedFromTemp();
+    }
+
     private PageInfo<ParkingLot> getPageInfo(PageRequest pageRequest) {
         int pageNum = pageRequest.getPageNum();
         int pageSize = pageRequest.getPageSize();

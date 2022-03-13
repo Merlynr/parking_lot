@@ -12,15 +12,12 @@ import com.merlynr.parking.dao.UsersDao;
 import com.merlynr.parking.model.ParkingRecord;
 import com.merlynr.parking.model.Users;
 import com.merlynr.parking.service.ParkingRecordService;
-import com.merlynr.parking.service.UserService;
-import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -91,30 +88,38 @@ public class ParkingRecordServiceImpl implements ParkingRecordService {
 
     @Override
     public String jiaru(JSONObject plateRes) {
-        System.out.println(plateRes.toString());
-        System.out.println((String) plateRes.get("license"));
         ParkingRecord parkingRecord = new ParkingRecord();
-        parkingRecord.setLicense((String) plateRes.get("license"));
-        parkingRecord.setStartTime(new Date());
-        System.out.println(new Date());
-        Users user =  usersDao.searchByLicense((String) plateRes.get("license"));
-        System.out.println("ASAS");
-        System.out.println(user);
-        if (user == null) {
-//            temp
-            System.out.println("AASSSSZZ");
-            System.out.println(parkingLotDao.findUnUsedFromTemp().get(0).getId().toString());
-            parkingRecord.setParkingLot(parkingLotDao.findUnUsedFromTemp().get(0).getId().toString());
+        ParkingRecord pr = parkingRecordDao.searchChuku((String) plateRes.get("license"));
+        System.out.println("SSS");
+        System.out.println(pr);
+        if(pr!=null){
+            System.out.println("AA");
+            System.out.println(pr);
+            pr.setEndTime(new Date());
+            pr.setCarOut("data:image/jpeg;base64,"+(String) plateRes.get("imageFragmentFile"));
+            parkingRecordDao.updateByPrimaryKeySelective(pr);
+            return "出库";
         }else{
-            parkingRecord.setUser(user.getName());
-            parkingRecord.setParkingLot(parkingLotDao.findUnUsedFromUser().get(0).getId().toString());
+            System.out.println("BB");
+            parkingRecord.setLicense((String) plateRes.get("license"));
+            parkingRecord.setStartTime(new Date());
+            Users user =  usersDao.searchByLicense((String) plateRes.get("license"));
+            if (user == null) {
+//            temp
+                parkingRecord.setParkingLot(parkingLotDao.findUnUsedFromTemp().get(0).getId().toString());
+            }else{
+                parkingRecord.setUser(user.getName());
+                parkingRecord.setParkingLot(parkingLotDao.findUnUsedFromUser().get(0).getId().toString());
+            }
+            parkingRecord.setCarIn("data:image/jpeg;base64,"+(String) plateRes.get("imageFragmentFile"));
+            parkingRecordDao.insert(parkingRecord);
+            return "进入";
         }
-        System.out.println("CCCC");
-        parkingRecord.setCarIn((String) plateRes.get("imageFragmentFile"));
-        System.out.println("DDDD");
-        System.out.println(parkingRecord);
-        parkingRecordDao.insert(parkingRecord);
-        return "进入";
+    }
+
+    @Override
+    public ParkingRecord ddd() {
+        return parkingRecordDao.searchChuku("京AF0236");
     }
 
     private  PageInfo<ParkingRecord> getLinShiPageInfo(PageRequest pageRequest) {

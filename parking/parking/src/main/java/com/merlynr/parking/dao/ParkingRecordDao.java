@@ -20,6 +20,7 @@ public interface ParkingRecordDao {
     int updateByPrimaryKeySelective(ParkingRecord record);
 
     int updateByPrimaryKey(ParkingRecord record);
+
     List<ParkingRecord> selectAll();
 
     List<ParkingRecord> searchByLicense(String license);
@@ -27,4 +28,6 @@ public interface ParkingRecordDao {
     List<ParkingRecord> searchRecordByTimes(Timestamp startTime, Timestamp endTime, String license);
 
     List<ParkingRecord> findLinShiByPage();
+
+    ParkingRecord searchChuku(String license);
 }

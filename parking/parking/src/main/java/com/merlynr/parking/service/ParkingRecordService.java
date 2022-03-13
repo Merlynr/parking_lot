@@ -28,4 +28,5 @@ public interface ParkingRecordService {
     List<ParkingRecord> searchRecordByTimes(String startTime,String endTime,String parkLot) throws ParseException;
     PageResult findLinShiByPage(PageRequest pageRequest);
     String jiaru(JSONObject jsonObject);
+    ParkingRecord ddd();
 }

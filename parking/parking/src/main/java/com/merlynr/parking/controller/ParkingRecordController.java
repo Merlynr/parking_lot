@@ -117,6 +117,12 @@ public class ParkingRecordController {
         }
     }
 
+    @GetMapping("get")
+    public  ParkingRecord get(){
+        System.out.println(parkingRecordService.ddd());
+        return parkingRecordService.ddd();
+    }
+
     @RequestMapping(value = "jiaru",method = RequestMethod.POST)
     public String jiaru(HttpServletRequest request){
 //        System.out.println(request.toString());
@@ -127,6 +133,7 @@ public class ParkingRecordController {
 //        System.out.println(license);
         JSONObject jsonParam = null;
         try {
+            System.out.println(request);
             // 获取输入流
             BufferedReader streamReader = new BufferedReader(new InputStreamReader(request.getInputStream(), "UTF-8"));
             // 写入数据到Stringbuilder
@@ -136,11 +143,13 @@ public class ParkingRecordController {
                 sb.append(line);
             }
             jsonParam = JSONObject.parseObject(sb.toString());
-            System.out.println("AAAA");
+
             return parkingRecordService.jiaru(jsonParam.getJSONObject("AlarmInfoPlate").getJSONObject("result").getJSONObject("PlateResult"));
         } catch (Exception e) {
 //            e.printStackTrace();
             return "等待。。。";
         }
     }
+
+
 }
