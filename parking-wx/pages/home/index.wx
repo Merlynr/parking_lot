@@ -2,7 +2,7 @@
 import { async } from '../../utils/runtime/runtime';
  * @Author: Merlynr
  * @Date: 2022-02-15 20:00:06
- * @LastEditTime: 2022-03-09 15:33:30
+ * @LastEditTime: 2022-03-14 19:43:47
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\home\index.wx
@@ -85,7 +85,9 @@ export default {
     six: "",
     seven: "",
     user: "",
-    parkingRecords: []
+    parkingRecords: [],
+    moneyList: [],
+    queryBean: {}
   },
   submit: async function() {
     let that = this;
@@ -101,12 +103,17 @@ export default {
     if (str.length == 7) {
       await this.searchUser(str);
       await this.searchRecord(str);
+      await this.getMoneyList();
       setTimeout(() => {
+        console.log("1")
         this.panduan();
+      }, 500);
+      setTimeout(() => {
+        console.log("2")
         wx.navigateTo({
-          url: '../money/money',
-        })
-      }, 300);
+          url: "../money/money?queryBean=" + JSON.stringify(that.data.queryBean)
+        });
+      }, 1500);
     } else {
       wx.showToast({
         title: "未填写完整",
@@ -116,10 +123,24 @@ export default {
       });
     }
   },
+  getMoneyList: function() {
+    let that = this;
+    wx.request({
+      method: "GET",
+      url: "http://127.0.0.1:8848/api/money/list",
+      header: {
+        token:
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
+      },
+      success(res) {
+        that.setData({
+          moneyList: res.data.data
+        });
+      }
+    });
+  },
   panduan: function() {
     let that = this;
-    console.log(that.data.user);
-    console.log(this.data.parkingRecords);
     if (
       that.data.parkingRecords == null ||
       that.data.parkingRecords.length == 0
@@ -131,14 +152,33 @@ export default {
         mask: true
       });
     } else {
+      let money = "";
+      let TEMP = this.data.parkingRecords[that.data.parkingRecords.length-1];
+      let time = this.getTime(
+        this.format(TEMP.startTime),
+        this.format(TEMP.endTime)
+      );
+      if (time <= 60) {
+        money = that.data.moneyList[1].money * time;
+      } else if (time > 60 && time <= 1440) {
+        money =
+          60 * that.data.moneyList[1].money +
+          (time - 60) * that.data.moneyList[2].money;
+      } else if (time > 1440) {
+        money = that.data.moneyList[3].money;
+      }
       if (that.data.user == "" || that.data.user == null) {
         // 临时用户出
         console.log("临时用户");
-        this.yuezhuCarOut(20);
+        // setTimeout(() => {
+        this.yuezhuCarOut(money, time);
+        // }, 300);
       } else {
         // 月租用户出
         console.log("月租用户");
-        this.yuezhuCarOut();
+        // setTimeout(() => {
+        this.yuezhuCarOut(-1, time);
+        // }, 300);
       }
     }
   },
@@ -183,35 +223,69 @@ export default {
   linshiCarOut: function(lincense) {
     // 获取计费算法，并进行计算
   },
-  yuezhuCarOut: function(money) {
+  yuezhuCarOut: function(money, time) {
     let that = this;
-    let Smoney = money
-    let mId = that.data.parkingRecords.length;
-    if (
-      that.data.parkingRecords[mId - 1].endTime == null ||
-      that.data.parkingRecords[mId - 1].endTime == ""
-    ) {
-      wx.request({
-        method: "POST",
-        url: "http://127.0.0.1:8848/api/parking/update",
-        header: {
-          token:
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
-        },
-        data: {
-          id: that.data.parkingRecords[mId - 1].id,
-          endTime: new Date(),
-          money:Smoney
-        }
-      });
-    } else {
-      wx.showToast({
-        title: "该车辆无停车记录",
-        icon: "success",
-        duration: 1000,
-        mask: true
-      });
-    }
+    let temp = that.data.parkingRecords[that.data.parkingRecords.length-1];
+    that.setData({
+      queryBean: {
+        id: temp.id,
+        license: temp.license,
+        startTime: this.format(temp.startTime),
+        time: time,
+        endTime: this.format(temp.endTime),
+        money: money
+      }
+    });
+    console.log(that.data.queryBean);
+    // let that = this;
+    // let Smoney = money;
+    // let mId = that.data.parkingRecords.length;
+    // console.log(that.data.parkingRecords);
+    // if (
+    //   that.data.parkingRecords[mId - 1].endTime == null ||
+    //   that.data.parkingRecords[mId - 1].endTime == ""
+    // ) {
+    //   wx.request({
+    //     method: "POST",
+    //     url: "http://127.0.0.1:8848/api/parking/update",
+    //     header: {
+    //       token:
+    //         "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
+    //     },
+    //     data: {
+    //       id: that.data.parkingRecords[mId - 1].id,
+    //       money: Smoney
+    //     }
+    //   });
+    // } else {
+    //   wx.showToast({
+    //     title: "该车辆无停车记录",
+    //     icon: "success",
+    //     duration: 1000,
+    //     mask: true
+    //   });
+    // }
+  },
+  getTime: function(day1, day2) {
+    let day11 = day1.replace(/-/g, "/");
+    let day22 = day2.replace(/-/g, "/");
+
+    var day_day1 = new Date(day11);
+    var day_day2 = new Date(day22);
+
+    let disparity = day_day2.getTime() - day_day1.getTime();
+    // 转为分钟数的时候，可能会出现精度丢失;你需要注意下
+    let min = Math.round(disparity / 1000 / 60);
+    // 计算时间
+    // this.data.time = MIN
+    return min;
+  },
+  format: function(date) {
+    var dates = new Date(date).toJSON();
+    return new Date(+new Date(dates) + 8 * 3600 * 1000)
+      .toISOString()
+      .replace(/T/g, " ")
+      .replace(/\.[\d]{3}Z/, "");
   }
 };
 </script>

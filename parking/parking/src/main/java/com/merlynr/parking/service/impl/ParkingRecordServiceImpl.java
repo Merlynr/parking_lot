@@ -9,6 +9,7 @@ import com.merlynr.parking.common.PageUtils;
 import com.merlynr.parking.dao.ParkingLotDao;
 import com.merlynr.parking.dao.ParkingRecordDao;
 import com.merlynr.parking.dao.UsersDao;
+import com.merlynr.parking.model.ParkingLot;
 import com.merlynr.parking.model.ParkingRecord;
 import com.merlynr.parking.model.Users;
 import com.merlynr.parking.service.ParkingRecordService;
@@ -90,14 +91,13 @@ public class ParkingRecordServiceImpl implements ParkingRecordService {
     public String jiaru(JSONObject plateRes) {
         ParkingRecord parkingRecord = new ParkingRecord();
         ParkingRecord pr = parkingRecordDao.searchChuku((String) plateRes.get("license"));
-        System.out.println("SSS");
-        System.out.println(pr);
         if(pr!=null){
-            System.out.println("AA");
-            System.out.println(pr);
             pr.setEndTime(new Date());
             pr.setCarOut("data:image/jpeg;base64,"+(String) plateRes.get("imageFragmentFile"));
             parkingRecordDao.updateByPrimaryKeySelective(pr);
+            ParkingLot pl = parkingLotDao.selectByPrimaryKey(Integer.parseInt(pr.getParkingLot()));
+            pl.setUsed("0");
+            parkingLotDao.updateByPrimaryKey(pl);
             return "出库";
         }else{
             System.out.println("BB");
@@ -106,10 +106,16 @@ public class ParkingRecordServiceImpl implements ParkingRecordService {
             Users user =  usersDao.searchByLicense((String) plateRes.get("license"));
             if (user == null) {
 //            temp
-                parkingRecord.setParkingLot(parkingLotDao.findUnUsedFromTemp().get(0).getId().toString());
+                ParkingLot pl=parkingLotDao.findUnUsedFromTemp().get(0);
+                parkingRecord.setParkingLot(pl.getId().toString());
+                pl.setUsed("1");
+                parkingLotDao.updateByPrimaryKey(pl);
             }else{
                 parkingRecord.setUser(user.getName());
-                parkingRecord.setParkingLot(parkingLotDao.findUnUsedFromUser().get(0).getId().toString());
+                ParkingLot pl=parkingLotDao.findUnUsedFromUser().get(0);
+                parkingRecord.setParkingLot(pl.getId().toString());
+                pl.setUsed("1");
+                parkingLotDao.updateByPrimaryKey(pl);
             }
             parkingRecord.setCarIn("data:image/jpeg;base64,"+(String) plateRes.get("imageFragmentFile"));
             parkingRecordDao.insert(parkingRecord);

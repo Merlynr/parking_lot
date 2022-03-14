@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-03-09 15:28:03
- * @LastEditTime: 2022-03-09 16:14:10
+ * @LastEditTime: 2022-03-14 16:11:03
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\money\money.wx
@@ -18,12 +18,12 @@
         <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">进场时间：{{start}}</span>
         <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">出场时间：{{end}}</span>
         <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">停车时长：{{time}}</span>
-        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">应付费用：{{money}}</span>
+        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">应付费用：ss{{money}}</span>
         <view class="buttonContent">
           <button
             style="background:#00BAAD;width:180px;position:absolute;bottom:90px;left:70px"
             type="submit"
-            bindtap="submit"
+            bindtap="submit()"
           >提交</button>
         </view>
       </view>
@@ -34,19 +34,29 @@
 <script>
 export default {
   config: {
-    navigationBarTitleText: "停车详情",
+    navigationBarTitleText: "停车详情s",
     backgroundColor: "#F4F4F4",
     navigationBarTextStyle: "black"
   },
   data: {
-    license: "",
-    start: "",
-    end: "",
+    license: "鲁JRW350",
+    start: "2022-03-04 14:31:15",
+    end: "2022-03-09 15:17:25",
     time: "",
-    money: ""
+    money: "",
+    queryBean:{}
+  },
+  onLoad: function (options) {
+    console.log("SSSSSSSSssSS")
+    var that=this
+    var queryBean = JSON.parse(options.queryBean);
+    that.setData({
+      queryBean: queryBean
+    })
+    console.log(that.data.queryBean)
   },
   submit: function() {
-    console.log("sss");
+    console.log("sssS");
   }
 };
 </script>

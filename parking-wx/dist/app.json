@@ -1,18 +1,18 @@
 {
-    "pages": [
-        "pages/home/index",
-        "pages/money/money"
-    ],
-    "window": {
-        "backgroundTextStyle": "dark",
-        "backgroundColor": "#efefef",
-        "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTitleText": "TouchUI",
-        "navigationBarTextStyle": "black"
-    },
-    "networkTimeout": {
-        "request": 10000
-    },
+  "pages": [
+    "pages/home/index",
+    "pages/money/money"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#efefef",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "TouchUI",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000
+  },
     "theme": "blue",
     "sitemapLocation": "sitemap.json"
 }

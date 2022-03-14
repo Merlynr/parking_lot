@@ -45,7 +45,7 @@
     "compileType": "miniprogram",
     "libVersion": "2.19.2",
     "appid": "wx68d3a11cb911d6fa",
-    "projectname": "parking-wx",
+    "projectname": "dist",
     "cloudfunctionTemplateRoot": "",
     "watchOptions": {
         "ignore": []
