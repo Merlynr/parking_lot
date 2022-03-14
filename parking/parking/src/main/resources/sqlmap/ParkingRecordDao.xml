@@ -182,7 +182,7 @@
   <select id="searchChuku" parameterType="java.lang.String" resultMap="BaseResultMap">
     select * from parking_record
     <where>
-      license = #{license,jdbcType=VARCHAR} and  money!='null'
+      license  #{license,jdbcType=VARCHAR} and  money!='null'
       and end_time is null
     </where>
   </select>

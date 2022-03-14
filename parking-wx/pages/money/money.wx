@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-03-09 15:28:03
- * @LastEditTime: 2022-03-14 19:53:52
+ * @LastEditTime: 2022-03-14 20:30:26
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\money\money.wx
@@ -14,16 +14,16 @@
         <i style="font-size:20px;font:strong;color:white">停车详情</i>
       </view>
       <view style="display:block;height:360px;border:1px solid black;padding-bottom:10px;padding-top:10px;">
-        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">车辆车牌：{{license}}</span>
-        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">进场时间：{{start}}</span>
-        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">出场时间：{{end}}</span>
-        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">停车时长：{{time}}</span>
-        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">应付费用：ss{{money}}</span>
+        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-70px">车辆车牌：{{queryBean.license}}</span>
+        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-20px">进场时间：<i style='font-size:12px'>{{queryBean.startTime}}</i></span>
+        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-20px">出场时间：<i style='font-size:12px'>{{queryBean.endTime}}</i></span>
+        <span style="font-size:14px;display:block;width:100%;height:15%;margin-left:-45px">停车时长：{{queryBean.time}}分钟</span>
+        <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-85px">应付费用：{{queryBean.money}}元</span>
         <view class="buttonContent">
           <button
             style="background:#00BAAD;width:180px;position:absolute;bottom:90px;left:70px"
             type="submit"
-            bindtap="submit()"
+            bindtap="submit"
           >提交</button>
         </view>
       </view>
@@ -34,16 +34,11 @@
 <script>
 export default {
   config: {
-    navigationBarTitleText: "停车详情s",
+    navigationBarTitleText: "停车详情",
     backgroundColor: "#F4F4F4",
     navigationBarTextStyle: "black"
   },
   data: {
-    license: "鲁JRW350",
-    start: "2022-03-04 14:31:15",
-    end: "2022-03-09 15:17:25",
-    time: "",
-    money: "",
     queryBean:{}
   },
   onLoad: function (options) {
@@ -52,10 +47,10 @@ export default {
     that.setData({
       queryBean: queryBean
     })
-    console.log(that.data.queryBean)
   },
   submit: function() {
     let that = this;
+    console.log("SSS")
       wx.request({
         method: "POST",
         url: "http://127.0.0.1:8848/api/parking/update",

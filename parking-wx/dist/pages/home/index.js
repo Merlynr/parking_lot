@@ -51,13 +51,23 @@ exports.default = Page({
 
             case 9:
               setTimeout(function () {
-                console.log("1");
                 _this.panduan();
               }, 500);
               setTimeout(function () {
-                console.log("2");
                 wx.navigateTo({
                   url: "../money/money?queryBean=" + JSON.stringify(that.data.queryBean)
+                });
+                that.setData({
+                  user: "",
+                  parkingRecords: [],
+                  queryBean: {},
+                  one: "",
+                  two: "",
+                  three: "",
+                  four: "",
+                  five: "",
+                  six: "",
+                  seven: ""
                 });
               }, 1500);
               _context.next = 14;
@@ -187,7 +197,6 @@ exports.default = Page({
         money: money
       }
     });
-    console.log(that.data.queryBean);
     // let that = this;
     // let Smoney = money;
     // let mId = that.data.parkingRecords.length;

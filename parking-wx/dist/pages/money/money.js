@@ -5,11 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = Page({
   data: {
-    license: "鲁JRW350",
-    start: "2022-03-04 14:31:15",
-    end: "2022-03-09 15:17:25",
-    time: "",
-    money: "",
     queryBean: {}
   },
   onLoad: function onLoad(options) {
@@ -18,10 +13,10 @@ exports.default = Page({
     that.setData({
       queryBean: queryBean
     });
-    console.log(that.data.queryBean);
   },
   submit: function submit() {
     var that = this;
+    console.log("SSS");
     wx.request({
       method: "POST",
       url: "http://127.0.0.1:8848/api/parking/update",

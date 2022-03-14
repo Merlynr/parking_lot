@@ -2,7 +2,7 @@
 import { async } from '../../utils/runtime/runtime';
  * @Author: Merlynr
  * @Date: 2022-02-15 20:00:06
- * @LastEditTime: 2022-03-14 19:58:29
+ * @LastEditTime: 2022-03-14 20:28:50
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\home\index.wx
@@ -111,6 +111,18 @@ export default {
         wx.navigateTo({
           url: "../money/money?queryBean=" + JSON.stringify(that.data.queryBean)
         });
+        that.setData({
+          user:"",
+          parkingRecords:[],
+          queryBean:{},
+          one:"",
+          two:"",
+          three:"",
+          four:"",
+          five:"",
+          six:"",
+          seven:"",
+        })
       }, 1500);
     } else {
       wx.showToast({
