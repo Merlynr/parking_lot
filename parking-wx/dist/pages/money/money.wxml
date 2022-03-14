@@ -8,9 +8,9 @@
       <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">进场时间：{{start}}</span>
       <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">出场时间：{{end}}</span>
       <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">停车时长：{{time}}</span>
-      <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">应付费用：{{money}}</span>
+      <span style="font-size:14px;display:inline-block;width:100%;height:15%;margin-left:-100px">应付费用：ss{{money}}</span>
       <view class="buttonContent">
-        <button style="background:#00BAAD;width:180px;position:absolute;bottom:90px;left:70px" type="submit" bindtap="submit">提交</button>
+        <button style="background:#00BAAD;width:180px;position:absolute;bottom:90px;left:70px" type="submit" bindtap="submit()">提交</button>
       </view>
     </view>
   </view>

@@ -1,7 +1,7 @@
 <!--
  * @Author: Merlynr
  * @Date: 2022-03-09 15:28:03
- * @LastEditTime: 2022-03-14 16:11:03
+ * @LastEditTime: 2022-03-14 19:53:52
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\money\money.wx
@@ -47,7 +47,6 @@ export default {
     queryBean:{}
   },
   onLoad: function (options) {
-    console.log("SSSSSSSSssSS")
     var that=this
     var queryBean = JSON.parse(options.queryBean);
     that.setData({
@@ -56,8 +55,20 @@ export default {
     console.log(that.data.queryBean)
   },
   submit: function() {
-    console.log("sssS");
-  }
+    let that = this;
+      wx.request({
+        method: "POST",
+        url: "http://127.0.0.1:8848/api/parking/update",
+        header: {
+          token:
+            "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxIn0.qfd0G-elhE1aGr15LrnYlIZ_3UToaOM5HeMcXrmDGBM"
+        },
+        data: {
+          id: that.data.queryBean.id,
+          money: that.data.queryBean.money
+        }
+      });
+  },
 };
 </script>
 

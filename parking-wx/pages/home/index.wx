@@ -2,7 +2,7 @@
 import { async } from '../../utils/runtime/runtime';
  * @Author: Merlynr
  * @Date: 2022-02-15 20:00:06
- * @LastEditTime: 2022-03-14 19:43:47
+ * @LastEditTime: 2022-03-14 19:58:29
  * @LastEditors: your name
  * @Description: 
  * @FilePath: \parking-wx\pages\home\index.wx
@@ -105,11 +105,9 @@ export default {
       await this.searchRecord(str);
       await this.getMoneyList();
       setTimeout(() => {
-        console.log("1")
         this.panduan();
       }, 500);
       setTimeout(() => {
-        console.log("2")
         wx.navigateTo({
           url: "../money/money?queryBean=" + JSON.stringify(that.data.queryBean)
         });
@@ -236,7 +234,6 @@ export default {
         money: money
       }
     });
-    console.log(that.data.queryBean);
     // let that = this;
     // let Smoney = money;
     // let mId = that.data.parkingRecords.length;
