@@ -40,6 +40,9 @@ const routes = [
       },{
         path:"/jiaofeirecord",
         component: () => import("../views/jiaofei/linshi.vue")
+      },{
+        path:"/last",
+        component: () => import("../views/tongji/shouru.vue")
       }
       // {
       //   path: '/performance',

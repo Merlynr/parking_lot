@@ -6,6 +6,9 @@ import './assets/reset.scss'
 import axios from 'axios'
 // import store from './store'
 import qs from 'qs'
+import * as echarts from 'echarts';
+
+Vue.prototype.$echarts = echarts
 
 Vue.config.productionTip = false
 Vue.prototype.qs = qs
